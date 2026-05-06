@@ -19,7 +19,7 @@ curl_setopt($ch, CURLOPT_HTTPHEADER, ['Content-Type: application/json']);
 $response = curl_exec($ch);
 curl_close($ch);
 
-// Decode Flask's JSON response
+// Decode Flask's JSON response kk
 $result = json_decode($response, true);
 ?>
 
