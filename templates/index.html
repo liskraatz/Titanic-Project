@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <title>Titanic AI Prediction Model</title>
+  </head>
+  <body>
+    <h1>Titanic Survival Prediction</h1>
+
+    <input type="text" id="name-input" placeholder="Name"><br>
+
+    <label>Sex</label><br>
+    <input type="radio" class="sex" name="sex" value="male" checked>
+    <label for="male">Male</label><br>
+    <input type="radio" class="sex" name="sex" value="female">
+    <label for="female">Female</label><br>
+    <input type="radio" class="sex" name="sex" value="other">
+    <label for="other">Other</label><br>
+
+
+    <input type="number" id="age-input" placeholder="Age">
+
+    <button onclick="sendPredictionData()">Predict Survival</button>
+
+
+
+    <script>
+      function sendPredictionData(){
+        let name = document.getElementById('name-input').value;
+        let sex = document.querySelector('.sex:checked').value;
+        let age = document.getElementById('age-input').value;
+        age = parseInt(age);
+
+        const passengerData = {
+          name: name,
+          sex: sex,
+          age: age,
+        };
+        
+        // Sending data in background 
+        // Fetch = built-in-browser API to make HTTP requests
+        fetch('/predict', { // URL
+          method: 'POST', 
+          headers: {
+            'Content-Type': 'application/json' // Format so flaks knows how to read
+          },
+          body: JSON.stringify(passengerData) // Raw text string for transport        
+          })
+          .then(response => response.json()) //Parsing incoming stream
+          .then(data => { // Dictionary from Flask
+            console.log("Server says: ", data);
+          });
+
+    
+      }
+    </script>
+
+  </body>
+
+</html>
