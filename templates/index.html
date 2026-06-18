@@ -3,55 +3,141 @@
   <head>
     <meta charset="UTF-8">
     <title>Titanic AI Prediction Model</title>
+    <link rel="stylesheet" href="style.css">
   </head>
   <body>
     <h1>Titanic Survival Prediction</h1>
 
-    <input type="text" id="name-input" placeholder="Name"><br>
+    <!--Name-->
+    <div class="form-step active">
+      <h3 for="name">Name</h3>
+      <input type="text" name="name" id="name-input" placeholder="Name"><br>
 
-    <label>Sex</label><br>
-    <input type="radio" class="sex" name="sex" value="male" checked>
-    <label for="male">Male</label><br>
-    <input type="radio" class="sex" name="sex" value="female">
-    <label for="female">Female</label><br>
-    <input type="radio" class="sex" name="sex" value="other">
-    <label for="other">Other</label><br>
+      <button class="next-button">Next</button>
+    </div>
 
+    <div class="form-step">
+    <!--Sex-->
+      <h3>Sex</h3>
+      
+      <input type="radio" class="sex" name="sex" value="0" checked>
+      <label for="male">Male</label>
+      
+      <input type="radio" class="sex" name="sex" value="1">
+      <label for="female">Female</label>
 
-    <input type="number" id="age-input" placeholder="Age">
+      <input type="radio" class="sex" name="sex" value="0">
+      <label for="other">Other</label>
+  
+    <!--Title-->
+      <h3>Title</h3>
+      <select id="title-input" name="title">
+        <option value="0" selected disabled>Please choose a title</option>
+        <option value="1">Mr</option>
+        <option value="2">Ms</option>
+        <option value="3">Mrs</option>
+        <option value="4">None</option>
+        <option value="5">VIP</option>
+        <option value="6">Professional</option>
+      </select>
+      <button class="next-button">Next</button>
+      <button class="back-button">Back</button>
+    </div>
 
-    <button onclick="sendPredictionData()">Predict Survival</button>
+    <div class="form-step">
+    <!--Age-->
+      <h3>Age</h3>
+      <input type="number" name="age" id="age-input" placeholder="Age" min="0" max="100" size="3"><br>
+      <button class="next-button">Next</button>
+      <button class="back-button">Back</button>
+    </div>
 
+    <div class="form-step">
+    <!--Travel Comfort-->
+      <h3>How would you like to travel?</h3>
+      <input type="radio" class="travel-comfort" name="class" value="1">
+      <label for="1">I'd rough it to save money</label>
+      <input type="radio" class="travel-comfort" name="class" value="2">
+      <label for="2">Comfortable but not extravagant</label>
+      <input type="radio" class="travel-comfort" name="class" value="3" checked>
+      <label for="2">Nothing but the best</label>
+      
+      <button class="next-button">Next</button>
+      <button class="back-button">Back</button>
+    </div>
 
+    <div class="form-step">
+    <!--Family Information-->
+      <h3>How many siblings do you have?</h3>
+
+      <input type="number" id="sib-input" name="sib" id="sib-input" min="0" max="10" size="3"><br>
+
+      <h3>Are you travelling with your parents?</h3>
+      <input type="radio" class="pa-input" name="pa" value="1">
+      <label for="1">Yes</label>
+      <input type="radio" class="pa-input" name="pa" value="0" checked>
+      <label for="0">No</label><br>
+
+      <button class="next-button">Next</button>
+      <button class="back-button">Back</button>
+    </div>
+
+    <div class="form-step">
+      <h3>Do you have a spouse or partner?</h3>
+      <input type="radio" class="sp-input" name="sp" value="1">
+      <label for="1">Yes</label>
+      <input type="radio" class="sp-input" name="sp" value="0" checked>
+      <label for="0">No</label>
+
+      <h3>How many children do you have?</h3>
+      <input type="number" name="ch" id="ch-input" min="0" max="10"size="3"><br><br>
+      
+    <!--Submit-->
+      <button onclick="sendPredictionData()">Predict Survival</button>
+     
+      <button class="back-button">Back</button>
+    </div>
 
     <script>
+      // Get data from user input
       function sendPredictionData(){
         let name = document.getElementById('name-input').value;
-        let sex = document.querySelector('.sex:checked').value;
-        let age = document.getElementById('age-input').value;
+        let sex = parseInt(document.querySelector('.sex:checked').value);
+        let age = parseInt(document.getElementById('age-input').value);
         age = parseInt(age);
+        let title = parseInt(document.getElementById('title-input').value);
+        let travelComfort = parseInt(document.querySelector('.travel-comfort:checked').value);
+        let sib = parseInt(document.getElementById('sib-input').value);
+        let pa = parseInt(document.querySelector('.pa-input:checked').value);
+        let sp = parseInt(document.querySelector('.sp-input:checked').value);
+        let ch = parseInt(document.getElementById('ch-input').value);
+
 
         const passengerData = {
           name: name,
           sex: sex,
           age: age,
+          title: title,
+          'travel-comfort': travelComfort,
+          sib: sib,
+          pa: pa,
+          sp: sp,
+          ch: ch,
         };
         
         // Sending data in background 
         // Fetch = built-in-browser API to make HTTP requests
-        fetch('/predict', { // URL
-          method: 'POST', 
+        fetch('/predict', { // Target URL
+          method: 'POST', // Sending data to server
           headers: {
             'Content-Type': 'application/json' // Format so flaks knows how to read
           },
-          body: JSON.stringify(passengerData) // Raw text string for transport        
+          body: JSON.stringify(passengerData) // Convert to raw text string for transport        
           })
           .then(response => response.json()) //Parsing incoming stream
           .then(data => { // Dictionary from Flask
             console.log("Server says: ", data);
           });
-
-    
       }
     </script>
 

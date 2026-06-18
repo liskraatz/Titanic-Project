@@ -1,0 +1,31 @@
+/* Global Styles */
+
+*{
+  margin: 0;
+  padding: 0;
+};
+
+:root {
+--bg-color: white;
+--text-color: black;
+}
+
+/* Body Styles */
+
+body{
+  font: Helvetica;
+}
+
+h3{
+  font: Helvetica, sans-serif;
+}
+
+/* Form Steps */
+
+.form-step{
+  display: hidden;
+}
+
+.form-step:active{
+  display: block;
+}
