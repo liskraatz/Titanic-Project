@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <title>Titanic AI Prediction Model</title>
     <link rel="stylesheet" href="/static/css/style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Prata&display=swap" rel="stylesheet">
   </head>
 
   <header>
@@ -16,7 +20,7 @@
     <div class="form-step active">
       <div>
         <div class="text-input">
-          <h3 for="name">Name</h3>
+          <h3 for="name">Enter your Name</h3>
           <input type="text" name="name" id="name-input" placeholder="Name"><br>
         </div>
         <div>
@@ -180,7 +184,7 @@
         steps.forEach((step, index) => {
           if(index == stepIndex){
             step.classList.add('active');
-          }else{
+          } else{
             step.classList.remove('active');
           }
           let oceanHeight = ((13 * stepIndex + 25))

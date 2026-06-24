@@ -8,7 +8,18 @@
 :root {
 --bg-color: white;
 --text-color: black;
+--text-font: "Prata", "Didone", "Bodoni MT", "Georgia", serif;
 }
+
+/* Header Styles */
+
+header{
+  display: block;
+  text-align: center;
+  margin: 4em 0 2em 0;
+}
+
+/* Background Styles */
 
 #ocean{
   background-color: #73c1d7;
@@ -28,7 +39,7 @@
   width: 200%;
   height: 100px;
   fill: #73c1d7;
-  animation: rollWave 12s linear infinite;
+  animation: rollWave 4s linear infinite;
 }
 
 @keyframes rollWave {
@@ -40,17 +51,10 @@
   }
 }
 
-/* Header Styles */
-
-header{
-  display: block;
-}
-
-
 /* Body Styles */
 
 body{
-  font: Helvetica;
+  font-family: "Prata", serif;
   width: 80vw;
   margin-right: auto;
   margin-left: auto;
@@ -71,9 +75,15 @@ h3{
 div .next-button{
   margin: 1em 0.5em 1em 0;
   padding: 0.5em 1.2em 0.5em 1.2em;
-  border: 1px solid;
+  border: none;
   border-radius: 0.5em;
+  background-color: #73c1d7;
 }
+
+div .next-button:hover{
+  background-color: aliceblue;
+}
+
 
 div .back-button{
   margin: 1em 0.8em 1em 0;
@@ -89,9 +99,9 @@ div .back-button{
   border-radius: 0.5em;
 }
 
+
+
 /* Form */
-
-
 
 .form-step{
   display: none;
