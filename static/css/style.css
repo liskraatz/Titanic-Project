@@ -75,14 +75,11 @@ h3{
 div .next-button{
   margin: 1em 0.5em 1em 0;
   padding: 0.5em 1.2em 0.5em 1.2em;
-  border: none;
+  border: 1px solid;
   border-radius: 0.5em;
-  background-color: #73c1d7;
 }
 
-div .next-button:hover{
-  background-color: aliceblue;
-}
+
 
 
 div .back-button{
