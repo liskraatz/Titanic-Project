@@ -3,114 +3,203 @@
   <head>
     <meta charset="UTF-8">
     <title>Titanic AI Prediction Model</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="/static/css/style.css">
   </head>
-  <body>
-    <h1>Titanic Survival Prediction</h1>
 
+  <header>
+    <h1>Titanic Survival Prediction</h1>
+  </header>
+
+  <body>
+<!--Page 1-->  
     <!--Name-->
     <div class="form-step active">
-      <h3 for="name">Name</h3>
-      <input type="text" name="name" id="name-input" placeholder="Name"><br>
-
-      <button class="next-button">Next</button>
+      <div>
+        <div class="text-input">
+          <h3 for="name">Name</h3>
+          <input type="text" name="name" id="name-input" placeholder="Name"><br>
+        </div>
+        <div>
+          <button class="next-button" onclick="navigateForward()">Next</button>
+        </div>
+      </div>
     </div>
 
+<!--Page 2-->  
     <div class="form-step">
-    <!--Sex-->
-      <h3>Sex</h3>
-      
-      <input type="radio" class="sex" name="sex" value="0" checked>
-      <label for="male">Male</label>
-      
-      <input type="radio" class="sex" name="sex" value="1">
-      <label for="female">Female</label>
+      <div>
+        <!--Sex-->
+        <div class="radio-input-horizontal">
+          <h3>Sex</h3>
+          
+          <input type="radio" class="sex" name="sex" value="0" checked>
+          <label for="male">Male</label>
+          
+          <input type="radio" class="sex" name="sex" value="1">
+          <label for="female">Female</label>
 
-      <input type="radio" class="sex" name="sex" value="0">
-      <label for="other">Other</label>
-  
-    <!--Title-->
-      <h3>Title</h3>
-      <select id="title-input" name="title">
-        <option value="0" selected disabled>Please choose a title</option>
-        <option value="1">Mr</option>
-        <option value="2">Ms</option>
-        <option value="3">Mrs</option>
-        <option value="4">None</option>
-        <option value="5">VIP</option>
-        <option value="6">Professional</option>
-      </select>
-      <button class="next-button">Next</button>
-      <button class="back-button">Back</button>
+          <input type="radio" class="sex" name="sex" value="0">
+          <label for="other">Other</label><br><br>
+        </div>
+
+        <!--Title-->
+        <div class="select-input">
+          <h3>Title</h3>
+          <select id="title-input" name="title">
+            <option value="0" selected disabled>Please choose a title</option>
+            <option value="1">Mr</option>
+            <option value="2">Ms</option>
+            <option value="3">Mrs</option>
+            <option value="4">None</option>
+            <option value="5">VIP</option>
+            <option value="6">Professional</option>
+          </select><br>
+        </div>
+
+        <div>
+          <button class="back-button" onclick="navigateBack()">Back</button>
+          <button class="next-button" onclick="navigateForward()">Next</button>
+        </div>
+      </div>
     </div>
 
+<!--Page 3-->  
     <div class="form-step">
-    <!--Age-->
-      <h3>Age</h3>
-      <input type="number" name="age" id="age-input" placeholder="Age" min="0" max="100" size="3"><br>
-      <button class="next-button">Next</button>
-      <button class="back-button">Back</button>
+      <div>
+        <!--Age-->
+        <div class="number-input">
+          <h3>Age</h3>
+          <input type="number" name="age" id="age-input" placeholder="Age" min="0" max="100" size="3"><br>
+        </div>
+
+        <div>
+          <button class="back-button" onclick="navigateBack()">Back</button>
+          <button class="next-button" onclick="navigateForward()">Next</button>
+        </div>
+      </div>
     </div>
 
+<!--Page 4-->  
     <div class="form-step">
-    <!--Travel Comfort-->
-      <h3>How would you like to travel?</h3>
-      <input type="radio" class="travel-comfort" name="class" value="1">
-      <label for="1">I'd rough it to save money</label>
-      <input type="radio" class="travel-comfort" name="class" value="2">
-      <label for="2">Comfortable but not extravagant</label>
-      <input type="radio" class="travel-comfort" name="class" value="3" checked>
-      <label for="2">Nothing but the best</label>
-      
-      <button class="next-button">Next</button>
-      <button class="back-button">Back</button>
+      <div>
+        <!--Travel Comfort-->
+        <div class="radio-input-vertical">
+          <h3>How would you like to travel?</h3>
+          <input type="radio" class="travel-comfort" name="class" value="1">
+          <label for="1">I'd rough it to save money</label><br>
+          <input type="radio" class="travel-comfort" name="class" value="2" checked>
+          <label for="2">Comfortable but not extravagant</label><br>
+          <input type="radio" class="travel-comfort" name="class" value="3">
+          <label for="2">Nothing but the best</label><br>
+        </div>
+
+        <div>
+          <button class="back-button" onclick="navigateBack()">Back</button>
+          <button class="next-button" onclick="navigateForward()">Next</button>
+        </div>
+      </div>
     </div>
 
+<!--Page 5-->  
     <div class="form-step">
-    <!--Family Information-->
-      <h3>How many siblings do you have?</h3>
+      <div>
+      <!--Siblings-->
+        <div class="number-input">
+          <h3>How many siblings do you have?</h3>
 
-      <input type="number" id="sib-input" name="sib" id="sib-input" min="0" max="10" size="3"><br>
+          <input type="number" id="sib-input" name="sib" min="0" max="10" size="3"><br>
+        </div>
+      <!--Parents-->
+        <div class="radio-input-horizontal">
+          <h3>Are you travelling with your parents?</h3>
+          <input type="radio" class="pa-input" name="pa" value="1">
+          <label for="1">Yes</label>
+          <input type="radio" class="pa-input" name="pa" value="0" checked>
+          <label for="0">No</label><br>
+        </div>
 
-      <h3>Are you travelling with your parents?</h3>
-      <input type="radio" class="pa-input" name="pa" value="1">
-      <label for="1">Yes</label>
-      <input type="radio" class="pa-input" name="pa" value="0" checked>
-      <label for="0">No</label><br>
-
-      <button class="next-button">Next</button>
-      <button class="back-button">Back</button>
+        <div>
+          <button class="back-button" onclick="navigateBack()">Back</button>
+          <button class="next-button" onclick="navigateForward()">Next</button>
+        </div>
+      </div>
     </div>
 
+<!--Page 6-->
     <div class="form-step">
-      <h3>Do you have a spouse or partner?</h3>
-      <input type="radio" class="sp-input" name="sp" value="1">
-      <label for="1">Yes</label>
-      <input type="radio" class="sp-input" name="sp" value="0" checked>
-      <label for="0">No</label>
+      <div>
+        <div class="radio-input-horizontal">
+          <h3>Do you have a spouse or partner?</h3>
+          <input type="radio" class="sp-input" name="sp" value="1">
+          <label for="1">Yes</label>
+          <input type="radio" class="sp-input" name="sp" value="0" checked>
+          <label for="0">No</label>
+        </div>
 
-      <h3>How many children do you have?</h3>
-      <input type="number" name="ch" id="ch-input" min="0" max="10"size="3"><br><br>
-      
-    <!--Submit-->
-      <button onclick="sendPredictionData()">Predict Survival</button>
-     
-      <button class="back-button">Back</button>
+        <div class="number-input">
+          <h3>How many children do you have?</h3>
+          <input type="number" name="ch" id="ch-input" min="0" max="10"size="3"><br><br>
+        </div>
+
+        <!--Submit-->
+        <div>
+          <button class="back-button" onclick="navigateBack()">Back</button>
+          <button class="predictSurv" onclick="sendPredictionData()">Predict Survival</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="ocean">
+      <svg class="wave" viewBox="0 0 1200 120" preserveAspectRatio="none">
+        <path d="M0,60 C150,100 350,20 600,60 C850,100 1050,20 1200,60 L1200,120 L0,120 Z">
+        </path>
+      </svg>
     </div>
 
     <script>
+      // Form Navigation 
+      let currentStep = 0
+      let steps = document.querySelectorAll('.form-step');
+
+      function navigateBack(){
+        if (currentStep > 0){
+          currentStep--;
+          showStep(currentStep)
+        };
+      };
+
+       function navigateForward(){
+        if (currentStep < (steps.length - 1)){
+          currentStep++;
+          showStep(currentStep)
+        };
+      };
+
+    // Simulate pages in form
+      function showStep(stepIndex){
+        steps.forEach((step, index) => {
+          if(index == stepIndex){
+            step.classList.add('active');
+          }else{
+            step.classList.remove('active');
+          }
+          let oceanHeight = ((13 * stepIndex + 25))
+          ocean = document.getElementById("ocean")
+          ocean.style.height = oceanHeight + "vh"
+      })};
+
+
       // Get data from user input
       function sendPredictionData(){
         let name = document.getElementById('name-input').value;
         let sex = parseInt(document.querySelector('.sex:checked').value);
-        let age = parseInt(document.getElementById('age-input').value);
-        age = parseInt(age);
+        let age = parseInt(document.getElementById('age-input').value) || 0;
         let title = parseInt(document.getElementById('title-input').value);
         let travelComfort = parseInt(document.querySelector('.travel-comfort:checked').value);
-        let sib = parseInt(document.getElementById('sib-input').value);
-        let pa = parseInt(document.querySelector('.pa-input:checked').value);
-        let sp = parseInt(document.querySelector('.sp-input:checked').value);
-        let ch = parseInt(document.getElementById('ch-input').value);
+        let sib = parseInt(document.getElementById('sib-input').value) || 0;
+        let pa = parseInt(document.querySelector('.pa-input:checked').value) || 0;
+        let sp = parseInt(document.querySelector('.sp-input:checked').value) || 0;
+        let ch = parseInt(document.getElementById('ch-input').value) || 0;
 
 
         const passengerData = {
@@ -139,6 +228,7 @@
             console.log("Server says: ", data);
           });
       }
+
     </script>
 
   </body>

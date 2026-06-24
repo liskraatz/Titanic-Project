@@ -10,22 +10,138 @@
 --text-color: black;
 }
 
+#ocean{
+  background-color: #73c1d7;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  height: 25vh;
+  width: 100%;
+  transition: height 0.8s ease-in-out;
+  z-index: -1;
+}
+
+.wave{
+  position: absolute;
+  top: -95px;
+  left: 0;
+  width: 200%;
+  height: 100px;
+  fill: #73c1d7;
+  animation: rollWave 12s linear infinite;
+}
+
+@keyframes rollWave {
+  0% {
+    transform: translateX(0);
+  }
+  100%{
+    transform: translateX(-50%);
+  }
+}
+
+/* Header Styles */
+
+header{
+  display: block;
+}
+
+
 /* Body Styles */
 
 body{
   font: Helvetica;
+  width: 80vw;
+  margin-right: auto;
+  margin-left: auto;
+  background-color: white;
+}
+
+h1{
+  margin-bottom: 1em;
 }
 
 h3{
-  font: Helvetica, sans-serif;
+  font: Arial, sans-serif;
+  margin: 0 0 1em 0;
 }
 
-/* Form Steps */
+/* Buttons */
+
+div .next-button{
+  margin: 1em 0.5em 1em 0;
+  padding: 0.5em 1.2em 0.5em 1.2em;
+  border: 1px solid;
+  border-radius: 0.5em;
+}
+
+div .back-button{
+  margin: 1em 0.8em 1em 0;
+  padding: 0.5em 1.2em 0.5em 1.2em;
+  border: 1px solid;
+  border-radius: 0.5em;
+}
+
+.predictSurv {
+  margin: 1em 0.8em 1em 0;
+  padding: 0.5em 1.2em 0.5em 1.2em;
+  border: 1px solid;
+  border-radius: 0.5em;
+}
+
+/* Form */
+
+
 
 .form-step{
-  display: hidden;
+  display: none;
 }
 
-.form-step:active{
-  display: block;
+div.form-step.active{
+  display: flex;
+  padding: 2em;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 60vh;
+  
 }
+
+/* Input */
+
+.text-input input{
+  padding: 0.8em 1em 0.8em 1em;
+  margin-bottom: 1em;
+  border: 1px solid;
+  border-radius: 0.5em;
+}
+
+.select-input select{
+  padding: 0.8em 1em 0.8em 1em;
+  margin-bottom: 2em;
+  border: 1px solid;
+  border-radius: 0.5em;
+}
+
+.number-input input{
+  padding: 0.8em 1em 0.8em 1em;
+  margin-bottom: 2em;
+  border: 1px solid;
+  border-radius: 0.5em;
+}
+
+.radio-input-horizontal label{
+  margin: 0 1em 0 0.3em;
+}
+
+.radio-input-horizontal input{
+  margin-bottom: 2em
+}
+
+.radio-input-vertical input {
+  margin: 0 1em 2em 0.3em;
+}
+
+
+
+
