@@ -68,6 +68,7 @@ h1{
 h3{
   font: Arial, sans-serif;
   margin: 0 0 1em 0;
+  font-size: 1.5em;
 }
 
 /* Buttons */
@@ -78,6 +79,7 @@ div .next-button{
   border: none;
   border-radius: 0.5em;
   background-color: #73c1d7;
+  font-size: 1em;
 }
 
 div .next-button:hover{
@@ -90,6 +92,7 @@ div .back-button{
   padding: 0.5em 1.2em 0.5em 1.2em;
   border: 1px solid;
   border-radius: 0.5em;
+  font-size: 1em;
 }
 
 .predictSurv {
@@ -97,8 +100,8 @@ div .back-button{
   padding: 0.5em 1.2em 0.5em 1.2em;
   border: 1px solid;
   border-radius: 0.5em;
+  font-size: 1em;
 }
-
 
 
 /* Form */
@@ -114,8 +117,8 @@ div.form-step.active{
   justify-content: center;
   align-items: center;
   min-height: 60vh;
-  
 }
+
 
 /* Input */
 
@@ -124,6 +127,7 @@ div.form-step.active{
   margin-bottom: 1em;
   border: 1px solid;
   border-radius: 0.5em;
+  font-size: 1em;
 }
 
 .select-input select{
@@ -131,6 +135,7 @@ div.form-step.active{
   margin-bottom: 2em;
   border: 1px solid;
   border-radius: 0.5em;
+  font-size: 1em;
 }
 
 .number-input input{
@@ -138,20 +143,27 @@ div.form-step.active{
   margin-bottom: 2em;
   border: 1px solid;
   border-radius: 0.5em;
+  font-size: 1em;
 }
 
 .radio-input-horizontal label{
   margin: 0 1em 0 0.3em;
+  font-size: 1.2em;
 }
 
 .radio-input-horizontal input{
-  margin-bottom: 2em
+  margin-bottom: 2em;
+  font-size: 1em;
 }
 
 .radio-input-vertical input {
   margin: 0 1em 2em 0.3em;
+  font-size: 1em;
 }
 
-
+.radio-input-vertical label {
+  margin: 0 1em 2em 0.3em;
+  font-size: 1.2em;
+}
 
 
