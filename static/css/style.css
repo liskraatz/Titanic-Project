@@ -154,11 +154,13 @@ div.form-step.active{
 .radio-input-horizontal input{
   margin-bottom: 2em;
   font-size: 1em;
+  padding: 2em
 }
 
 .radio-input-vertical input {
   margin: 0 1em 2em 0.3em;
   font-size: 1em;
+  padding: 2em;
 }
 
 .radio-input-vertical label {

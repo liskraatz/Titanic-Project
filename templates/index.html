@@ -114,8 +114,8 @@
         <div class="number-input">
           <h3>How many siblings do you have?</h3>
 
-          <input type="number" id="sib-input" name="sib" min="0" max="10" size="3"><br>
-          <p class="alert"></p>
+          <input type="number" id="sib-input" name="sib" min="0" max="10" size="3" data-error='If you have none, please enter "0"'><br>
+          <p class="alert"></p><br>
         </div>
       <!--Parents-->
         <div class="radio-input-horizontal">
@@ -147,7 +147,7 @@
 
         <div class="number-input">
           <h3>How many children do you have?</h3>
-          <input type="number" name="ch" id="ch-input" min="0" max="10"size="3"><br>
+          <input type="number" name="ch" id="ch-input" min="0" max="10"size="3" data-error='If you have no children, please enter "0"'><br>
           <p class="alert"></p><br><br>
         </div>
 
@@ -188,19 +188,19 @@
           if (individualInput.type == 'text'){
             if (individualInput.value == ''){
               isValid = false;
-              document.querySelector('.alert').innerText = individualInput.dataset.error;
+              activePage.querySelector('.alert').innerText = individualInput.dataset.error;
             }
           }
           else if(individualInput.type == 'number'){
-            if (individualInput.value == ''){
+            if (individualInput.value === ''){
               isValid = false;
-              document.querySelector('.alert').innerText = individualInput.dataset.error;
+              activePage.querySelector('.alert').innerText = individualInput.dataset.error;
             }
           }
           else if(individualInput.type == 'select-one'){
-             if (individualInput.value == ''){
+             if (individualInput.value == 0){
               isValid = false;
-              document.querySelector('.alert').innerText = individualInput.dataset.error;
+              activePage.querySelector('.alert').innerText = individualInput.dataset.error;
             }
           }
           if (isValid == false){
