@@ -7,7 +7,7 @@
 
 :root {
 --bg-color: white;
---text-color: black;
+--text-color: #151515;;
 --text-font: "Prata", "Didone", "Bodoni MT", "Georgia", serif;
 }
 
@@ -68,6 +68,7 @@ h1{
 h3{
   font: Arial, sans-serif;
   margin: 0 0 1em 0;
+  font-size: 1.5em;
 }
 
 /* Buttons */
@@ -75,27 +76,37 @@ h3{
 div .next-button{
   margin: 1em 0.5em 1em 0;
   padding: 0.5em 1.2em 0.5em 1.2em;
-  border: 1px solid;
+  border: 1px solid white;
   border-radius: 0.5em;
+  background-color: #73c1d7;
+  font-size: 1em;
 }
 
-
+div .next-button:hover{
+  background-color: #85d8ef;
+}
 
 
 div .back-button{
   margin: 1em 0.8em 1em 0;
   padding: 0.5em 1.2em 0.5em 1.2em;
-  border: 1px solid;
+  background-color: #73c1d7;
+  border: 1px solid white;
   border-radius: 0.5em;
+  font-size: 1em;
+}
+
+div .back-button:hover{
+  background-color: #85d8ef;
 }
 
 .predictSurv {
   margin: 1em 0.8em 1em 0;
   padding: 0.5em 1.2em 0.5em 1.2em;
-  border: 1px solid;
+  border: 1px solid white;
   border-radius: 0.5em;
+  font-size: 1em;
 }
-
 
 
 /* Form */
@@ -111,8 +122,8 @@ div.form-step.active{
   justify-content: center;
   align-items: center;
   min-height: 60vh;
-  
 }
+
 
 /* Input */
 
@@ -121,6 +132,7 @@ div.form-step.active{
   margin-bottom: 1em;
   border: 1px solid;
   border-radius: 0.5em;
+  font-size: 1em;
 }
 
 .select-input select{
@@ -128,6 +140,7 @@ div.form-step.active{
   margin-bottom: 2em;
   border: 1px solid;
   border-radius: 0.5em;
+  font-size: 1em;
 }
 
 .number-input input{
@@ -135,20 +148,48 @@ div.form-step.active{
   margin-bottom: 2em;
   border: 1px solid;
   border-radius: 0.5em;
+  font-size: 1em;
 }
 
-.radio-input-horizontal label{
-  margin: 0 1em 0 0.3em;
+/* Style radio buttons different from browser default */
+
+input[type="radio"]{ 
+  appearance: none;
+  width: 0.8rem;
+  height: 0.8rem;
+  outline: 3px solid #151515;
+  outline-offset: 2px;
+  border-radius: 20%;
+  cursor: pointer;
 }
 
-.radio-input-horizontal input{
-  margin-bottom: 2em
+input[type="radio"]:checked {
+  background: #151515;
 }
 
-.radio-input-vertical input {
-  margin: 0 1em 2em 0.3em;
+.radio label{
+  margin: 0 1em 0 1em;
 }
 
+.radio-input{
+  display: flex;
+  gap: 2em;
+  margin-bottom: 3em;
+  margin-left: 0.3em;
+}
 
+.radio-input.vertical {
+  flex-direction: column;
+  align-items:flex-start;
+  gap: 0.9em;
+  font-size: 1.2em;
+  
+}
 
+.radio-input.horizontal{
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 0.9em;
+  font-size: 1.2em;
+}
 

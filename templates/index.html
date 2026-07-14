@@ -21,7 +21,8 @@
       <div>
         <div class="text-input">
           <h3 for="name">Enter your Name</h3>
-          <input type="text" name="name" id="name-input" placeholder="Name"><br>
+          <input type="text" name="name" id="name-input" placeholder="Name" data-error="Please enter your name to continue."><br>
+          <p class="alert"></p><br>
         </div>
         <div>
           <button class="next-button" onclick="navigateForward()">Next</button>
@@ -33,23 +34,30 @@
     <div class="form-step">
       <div>
         <!--Sex-->
-        <div class="radio-input-horizontal">
           <h3>Sex</h3>
-          
-          <input type="radio" class="sex" name="sex" value="0" checked>
-          <label for="male">Male</label>
-          
-          <input type="radio" class="sex" name="sex" value="1">
-          <label for="female">Female</label>
 
-          <input type="radio" class="sex" name="sex" value="0">
-          <label for="other">Other</label><br><br>
+          <div class="radio-input horizontal">
+
+          <div class="radio">
+            <input type="radio" class="sex" name="sex" value="0" id="sex-male" checked>
+            <label for="sex-male">Male</label>
+          </div>
+
+          <div class="radio">
+            <input type="radio" class="sex" name="sex" value="1" id="sex-female">
+            <label for="sex-female">Female</label>
+          </div>
+
+          <div class="radio">
+            <input type="radio" class="sex" name="sex" value="0" id="sex-other">
+            <label for="sex-other">Other</label><br>
+          </div>
         </div>
 
         <!--Title-->
         <div class="select-input">
           <h3>Title</h3>
-          <select id="title-input" name="title">
+          <select id="title-input" name="title" data-error='Please choose a title to continue. You can also choose "None".'>
             <option value="0" selected disabled>Please choose a title</option>
             <option value="1">Mr</option>
             <option value="2">Ms</option>
@@ -58,6 +66,7 @@
             <option value="5">VIP</option>
             <option value="6">Professional</option>
           </select><br>
+          <p class="alert"></p><br>
         </div>
 
         <div>
@@ -73,7 +82,8 @@
         <!--Age-->
         <div class="number-input">
           <h3>Age</h3>
-          <input type="number" name="age" id="age-input" placeholder="Age" min="0" max="100" size="3"><br>
+          <input type="number" name="age" id="age-input" placeholder="Age" min="0" max="100" size="3" data-error="Age must be between 0 and 100."><br>
+          <p class="alert"></p><br>
         </div>
 
         <div>
@@ -87,17 +97,27 @@
     <div class="form-step">
       <div>
         <!--Travel Comfort-->
-        <div class="radio-input-vertical">
-          <h3>How would you like to travel?</h3>
-          <input type="radio" class="travel-comfort" name="class" value="1">
-          <label for="1">I'd rough it to save money</label><br>
-          <input type="radio" class="travel-comfort" name="class" value="2" checked>
-          <label for="2">Comfortable but not extravagant</label><br>
-          <input type="radio" class="travel-comfort" name="class" value="3">
-          <label for="2">Nothing but the best</label><br>
+        <h3>How would you like to travel?</h3>
+
+        <div class="radio-input vertical">
+
+          <div class="radio">
+            <input type="radio" class="travel-comfort" name="class" value="1">
+            <label for="1">I'd rough it to save money</label><br>
+          </div>
+
+          <div class="radio">
+            <input type="radio" class="travel-comfort" name="class" value="2" checked>
+            <label for="2">Comfortable but not extravagant</label><br>
+          </div>
+
+          <div class="radio">
+            <input type="radio" class="travel-comfort" name="class" value="3">
+            <label for="2">Nothing but the best</label><br>
+          </div>
         </div>
 
-        <div>
+        <div class="radio">
           <button class="back-button" onclick="navigateBack()">Back</button>
           <button class="next-button" onclick="navigateForward()">Next</button>
         </div>
@@ -111,18 +131,25 @@
         <div class="number-input">
           <h3>How many siblings do you have?</h3>
 
-          <input type="number" id="sib-input" name="sib" min="0" max="10" size="3"><br>
+          <input type="number" id="sib-input" name="sib" min="0" max="10" size="3" data-error='If you have none, please enter "0"'><br>
+          <p class="alert"></p><br>
         </div>
       <!--Parents-->
-        <div class="radio-input-horizontal">
-          <h3>Are you travelling with your parents?</h3>
-          <input type="radio" class="pa-input" name="pa" value="1">
-          <label for="1">Yes</label>
-          <input type="radio" class="pa-input" name="pa" value="0" checked>
-          <label for="0">No</label><br>
+      <h3>Are you travelling with your parents?</h3>
+        <div class="radio-input horizontal">
+          <div class="radio">
+            <input type="radio" class="pa-input" name="pa" value="1">
+            <label for="1">Yes</label>
+          </div>
+
+          <div class="radio">
+            <input type="radio" class="pa-input" name="pa" value="0" checked>
+            <label for="0">No</label><br>
+          </div>
+          <p class="alert"></p><br>
         </div>
 
-        <div>
+        <div class="radio">
           <button class="back-button" onclick="navigateBack()">Back</button>
           <button class="next-button" onclick="navigateForward()">Next</button>
         </div>
@@ -132,17 +159,24 @@
 <!--Page 6-->
     <div class="form-step">
       <div>
-        <div class="radio-input-horizontal">
-          <h3>Do you have a spouse or partner?</h3>
-          <input type="radio" class="sp-input" name="sp" value="1">
-          <label for="1">Yes</label>
-          <input type="radio" class="sp-input" name="sp" value="0" checked>
-          <label for="0">No</label>
+        <h3>Do you have a spouse or partner?</h3>
+          <div class="radio-input">
+
+          <div class="radio">
+            <input type="radio" class="sp-input" name="sp" id="yes-sp" value="1">
+            <label for="yes-sp">Yes</label>
+          </div>
+
+          <div class="radio">
+            <input type="radio" class="sp-input" name="sp" id="no-sp" value="0" checked>
+            <label for="no-sp">No</label>
+          </div>
         </div>
 
         <div class="number-input">
           <h3>How many children do you have?</h3>
-          <input type="number" name="ch" id="ch-input" min="0" max="10"size="3"><br><br>
+          <input type="number" name="ch" id="ch-input" min="0" max="20"size="3" data-error='If you have no children, please enter "0"'><br>
+          <p class="alert"></p><br><br>
         </div>
 
         <!--Submit-->
@@ -173,6 +207,41 @@
       };
 
        function navigateForward(){
+        // User input validation
+        let activePage = steps[currentStep];
+        let inputList = activePage.querySelectorAll('input, select');
+        let isValid = true;
+
+        for (individualInput of inputList){
+          if (individualInput.type == 'text'){
+            if (individualInput.value == ''){
+              isValid = false;
+              activePage.querySelector('.alert').innerText = individualInput.dataset.error;
+            }
+          }
+          else if(individualInput.type == 'number'){
+            if (individualInput.value === ''){
+              isValid = false;
+              activePage.querySelector('.alert').innerText = individualInput.dataset.error;
+            }else if (individualInput.value != ''){
+              userNumber = parseInt(individualInput.value)
+              if (userNumber > individualInput.max || userNumber < individualInput.min){
+                isValid = false;
+                activePage.querySelector('.alert').innerText = individualInput.dataset.error;
+              }
+            }
+          }
+          else if(individualInput.type == 'select-one'){
+             if (individualInput.value == 0){
+              isValid = false;
+              activePage.querySelector('.alert').innerText = individualInput.dataset.error;
+            }
+          }
+          if (isValid == false){
+            return;
+          }
+        }
+        
         if (currentStep < (steps.length - 1)){
           currentStep++;
           showStep(currentStep)
