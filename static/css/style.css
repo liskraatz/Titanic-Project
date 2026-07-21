@@ -137,7 +137,7 @@ div.form-step.active{
 
 .select-input select{
   padding: 0.8em 1em 0.8em 1em;
-  margin-bottom: 2em;
+  margin-bottom: 1.5em;
   border: 1px solid;
   border-radius: 0.5em;
   font-size: 1em;
@@ -145,15 +145,14 @@ div.form-step.active{
 
 .number-input input{
   padding: 0.8em 1em 0.8em 1em;
-  margin-bottom: 2em;
+  margin-bottom: 1.5em;
   border: 1px solid;
   border-radius: 0.5em;
   font-size: 1em;
 }
 
-/* Style radio buttons different from browser default */
 
-input[type="radio"]{ 
+input[type="radio"]{ /* Style radio buttons different from browser default */
   appearance: none;
   width: 0.8rem;
   height: 0.8rem;
@@ -167,6 +166,9 @@ input[type="radio"]:checked {
   background: #151515;
 }
 
+
+/* Vertical and horizontal radio button styling */
+
 .radio label{
   margin: 0 1em 0 1em;
 }
@@ -174,15 +176,15 @@ input[type="radio"]:checked {
 .radio-input{
   display: flex;
   gap: 2em;
-  margin-bottom: 3em;
   margin-left: 0.3em;
+  margin-bottom: 0.3em;
 }
 
 .radio-input.vertical {
   flex-direction: column;
   align-items:flex-start;
   gap: 0.9em;
-  font-size: 1.2em;
+  font-size: 1em;
   
 }
 
@@ -190,6 +192,16 @@ input[type="radio"]:checked {
   flex-direction: row;
   flex-wrap: wrap;
   gap: 0.9em;
-  font-size: 1.2em;
+  font-size: 1em;
 }
 
+/* Error message */
+.alert{
+  font-size: 1em;
+  font-weight: 600;
+  color: #153970;
+  width: 100%;         
+  flex-basis: 100%; /* New line in Flexbox*/
+  margin-bottom: 1em;
+ 
+}
