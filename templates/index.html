@@ -24,7 +24,7 @@
           <input type="text" name="name" id="name-input" placeholder="Name" data-error="Please enter your name to continue."><br>
           <p class="alert"></p><br>
         </div>
-        <div>
+        <div class="buttons">
           <button class="next-button" onclick="navigateForward()">Next</button>
         </div>
       </div>
@@ -39,20 +39,22 @@
           <div class="radio-input horizontal">
 
           <div class="radio">
-            <input type="radio" class="sex" name="sex" value="0" id="sex-male" checked>
+            <input type="radio" class="sex" name="sex" value="0" id="sex-male" data-error='Please choose an option to continue.' required>
             <label for="sex-male">Male</label>
           </div>
 
           <div class="radio">
-            <input type="radio" class="sex" name="sex" value="1" id="sex-female">
+            <input type="radio" class="sex" name="sex" value="1" id="sex-female" data-error='Please choose an option to continue.' required>
             <label for="sex-female">Female</label>
           </div>
 
           <div class="radio">
-            <input type="radio" class="sex" name="sex" value="0" id="sex-other">
-            <label for="sex-other">Other</label><br>
+            <input type="radio" class="sex" name="sex" value="0" id="sex-other" data-error='Please choose an option to continue.' required>
+            <label for="sex-other">Other</label>
           </div>
+          <p class="alert"></p><br>
         </div>
+        
 
         <!--Title-->
         <div class="select-input">
@@ -69,7 +71,7 @@
           <p class="alert"></p><br>
         </div>
 
-        <div>
+        <div class="buttons">
           <button class="back-button" onclick="navigateBack()">Back</button>
           <button class="next-button" onclick="navigateForward()">Next</button>
         </div>
@@ -86,7 +88,7 @@
           <p class="alert"></p><br>
         </div>
 
-        <div>
+        <div class="buttons">
           <button class="back-button" onclick="navigateBack()">Back</button>
           <button class="next-button" onclick="navigateForward()">Next</button>
         </div>
@@ -102,22 +104,23 @@
         <div class="radio-input vertical">
 
           <div class="radio">
-            <input type="radio" class="travel-comfort" name="class" value="1">
+            <input type="radio" class="travel-comfort" name="class" value="1" data-error='Please choose an option to continue.' required>
             <label for="1">I'd rough it to save money</label><br>
           </div>
 
           <div class="radio">
-            <input type="radio" class="travel-comfort" name="class" value="2" checked>
+            <input type="radio" class="travel-comfort" name="class" value="2" data-error='Please choose an option to continue.' required>
             <label for="2">Comfortable but not extravagant</label><br>
           </div>
 
           <div class="radio">
-            <input type="radio" class="travel-comfort" name="class" value="3">
+            <input type="radio" class="travel-comfort" name="class" value="3" data-error='Please choose an option to continue.' required>
             <label for="2">Nothing but the best</label><br>
           </div>
+          <p class="alert"></p><br>
         </div>
 
-        <div class="radio">
+        <div class="buttons">
           <button class="back-button" onclick="navigateBack()">Back</button>
           <button class="next-button" onclick="navigateForward()">Next</button>
         </div>
@@ -138,18 +141,18 @@
       <h3>Are you travelling with your parents?</h3>
         <div class="radio-input horizontal">
           <div class="radio">
-            <input type="radio" class="pa-input" name="pa" value="1">
+            <input type="radio" class="pa-input" name="pa" value="1" data-error='Please choose an option to continue.' required>
             <label for="1">Yes</label>
           </div>
 
           <div class="radio">
-            <input type="radio" class="pa-input" name="pa" value="0" checked>
+            <input type="radio" class="pa-input" name="pa" value="0" data-error='Please choose an option to continue.' required>
             <label for="0">No</label><br>
           </div>
           <p class="alert"></p><br>
         </div>
 
-        <div class="radio">
+        <div class="buttons">
           <button class="back-button" onclick="navigateBack()">Back</button>
           <button class="next-button" onclick="navigateForward()">Next</button>
         </div>
@@ -160,17 +163,18 @@
     <div class="form-step">
       <div>
         <h3>Do you have a spouse or partner?</h3>
-          <div class="radio-input">
+          <div class="radio-input horizontal">
 
           <div class="radio">
-            <input type="radio" class="sp-input" name="sp" id="yes-sp" value="1">
+            <input type="radio" class="sp-input" name="sp" id="yes-sp" value="1" data-error='Please choose an option to continue.' required>
             <label for="yes-sp">Yes</label>
           </div>
 
           <div class="radio">
-            <input type="radio" class="sp-input" name="sp" id="no-sp" value="0" checked>
+            <input type="radio" class="sp-input" name="sp" id="no-sp" value="0" data-error='Please choose an option to continue.' required>
             <label for="no-sp">No</label>
           </div>
+          <p class="alert"></p><br>
         </div>
 
         <div class="number-input">
@@ -180,7 +184,7 @@
         </div>
 
         <!--Submit-->
-        <div>
+        <div class="buttons">
           <button class="back-button" onclick="navigateBack()">Back</button>
           <button class="predictSurv" onclick="sendPredictionData()">Predict Survival</button>
         </div>
@@ -210,38 +214,73 @@
         // User input validation
         let activePage = steps[currentStep];
         let inputList = activePage.querySelectorAll('input, select');
+        let radioGroup = activePage.querySelector('input[type = "radio"]');
         let isValid = true;
 
+        // Validate if textbox is not empty
         for (individualInput of inputList){
+          let container = individualInput.closest('.select-input, .radio-input, .number-input, .text-input'); // Places error message in correct container
+          let alertBox = container.querySelector('.alert')
           if (individualInput.type == 'text'){
             if (individualInput.value == ''){
               isValid = false;
-              activePage.querySelector('.alert').innerText = individualInput.dataset.error;
+              if (container) {
+                    if(alertBox){
+                      alertBox.innerText = individualInput.dataset.error;
+                    }
+                  }
             }
           }
+          // Validate if number is within range and not zero
           else if(individualInput.type == 'number'){
             if (individualInput.value === ''){
               isValid = false;
-              activePage.querySelector('.alert').innerText = individualInput.dataset.error;
+              if (container) {
+                    if(alertBox){
+                      alertBox.innerText = individualInput.dataset.error;
+                    }
+                  }
             }else if (individualInput.value != ''){
               userNumber = parseInt(individualInput.value)
               if (userNumber > individualInput.max || userNumber < individualInput.min){
                 isValid = false;
-                activePage.querySelector('.alert').innerText = individualInput.dataset.error;
+                if (container) {
+                    if(alertBox){
+                      alertBox.innerText = individualInput.dataset.error;
+                    }
+                  }
               }
             }
           }
+          // Validate that a choice from the select menu has been chosen
           else if(individualInput.type == 'select-one'){
              if (individualInput.value == 0){
               isValid = false;
-              activePage.querySelector('.alert').innerText = individualInput.dataset.error;
+              if (container) {
+                    if(alertBox){
+                      alertBox.innerText = individualInput.dataset.error;
+                    }
+                  }
             }
           }
+          // Validate that one radio button is checked
+          else if (radioGroup != null){
+            if (activePage.querySelector('input[type="radio"]:checked') == null){
+                  isValid = false;
+                
+                  if (container) {
+                    if(alertBox){
+                      alertBox.innerText = individualInput.dataset.error;
+                    }
+                  }
+              }
+            }
+
           if (isValid == false){
             return;
           }
         }
-        
+
         if (currentStep < (steps.length - 1)){
           currentStep++;
           showStep(currentStep)
