@@ -48,11 +48,30 @@
             <label for="sex-female">Female</label>
           </div>
 
+          <!-- ORIGINAL:
           <div class="radio">
             <input type="radio" class="sex" name="sex" value="0" id="sex-other" data-error='Please choose an option to continue.' required>
             <label for="sex-other">Other</label>
           </div>
+          CHANGED: "Other" was sending value="0", the same as Male, so anyone
+          who picked it was silently being recorded/predicted as male.
+          Replaced with two real options below instead. -->
+
+          <div class="radio">
+            <input type="radio" class="sex" name="sex" value="2" id="sex-nonbinary" data-error='Please choose an option to continue.' required>
+            <label for="sex-nonbinary">Non-binary</label>
+          </div>
+
+          <div class="radio">
+            <input type="radio" class="sex" name="sex" value="3" id="sex-self-describe" data-error='Please choose an option to continue.' required>
+            <label for="sex-self-describe">Self-describe</label>
+          </div>
           <p class="alert"></p><br>
+
+          <!-- NEW: only shows when "Self-describe" is picked, see JS below -->
+          <div id="gender-self-describe-wrap" style="display:none;">
+            <input type="text" id="gender-self-describe" maxlength="40" placeholder="How would you describe your gender?" data-error="Please describe your gender, or choose another option above.">
+          </div>
         </div>
         
 
@@ -219,6 +238,13 @@
 
         // Validate if textbox is not empty
         for (individualInput of inputList){
+          // NEW: skip inputs that aren't currently visible (like the
+          // self-describe box when a different sex option is picked) -
+          // without this, it always counts as empty and blocks progress
+          // with an "undefined" error, even when it doesn't apply
+          if (individualInput.offsetParent === null){
+            continue;
+          }
           let container = individualInput.closest('.select-input, .radio-input, .number-input, .text-input'); // Places error message in correct container
           let alertBox = container.querySelector('.alert')
           if (individualInput.type == 'text'){
@@ -301,10 +327,20 @@
       })};
 
 
+      // NEW: reveals the self-describe text box only when that option is picked
+      document.querySelectorAll('.sex').forEach((radio) => {
+        radio.addEventListener('change', () => {
+          const wrap = document.getElementById('gender-self-describe-wrap');
+          wrap.style.display = (radio.value === '3' && radio.checked) ? 'block' : 'none';
+        });
+      });
+
       // Get data from user input
       function sendPredictionData(){
         let name = document.getElementById('name-input').value;
         let sex = parseInt(document.querySelector('.sex:checked').value);
+        // NEW: reads the self-describe text box, sent to Flask alongside sex
+        let genderSelf = document.getElementById('gender-self-describe').value;
         let age = parseInt(document.getElementById('age-input').value) || 0;
         let title = parseInt(document.getElementById('title-input').value);
         let travelComfort = parseInt(document.querySelector('.travel-comfort:checked').value);
@@ -317,6 +353,7 @@
         const passengerData = {
           name: name,
           sex: sex,
+          genderSelf: genderSelf, // NEW
           age: age,
           title: title,
           'travel-comfort': travelComfort,
@@ -338,6 +375,10 @@
           .then(response => response.json()) //Parsing incoming stream
           .then(data => { // Dictionary from Flask
             console.log("Server says: ", data);
+            // ORIGINAL: nothing shown to the user here, only logged to console
+            // CHANGED: now actually shows the result - swap this alert() for
+            // real results-page markup whenever that's ready
+            alert(data.outcome + " (as " + data.gender_label + ")");
           });
       }
 
