@@ -125,6 +125,10 @@ div.form-step.active{
   flex-direction: column;
 }
 
+#spch-page{
+  display: 'none';
+}
+
 
 /* Input */
 

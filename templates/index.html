@@ -175,7 +175,7 @@
   </div>
 
   <!--Page 6-->
-  <div class="form-step">
+  <div class="form-step" id="spch-page">
     <div>
       <h3>Do you have a spouse or partner?</h3>
       <div class="radio-input horizontal">
@@ -248,6 +248,7 @@
       for (individualInput of inputList) {
         let container = individualInput.closest('.select-input, .radio-input, .number-input, .text-input'); // Places error message in correct container
         let alertBox = container.querySelector('.alert')
+
         if (individualInput.type == 'text') {
           if (individualInput.value == '') {
             isValid = false;
@@ -313,21 +314,41 @@
 
 
     function navigateForward() {
+
+      // let age = parseInt(document.getElementById('age-input').value) || 0;
+      
       // User input validation
       validateInput()
       if (!validateInput()) {
         return;
       }
-
+      
       // Navigate pages
       if (currentStep < (steps.length - 1)) {
         currentStep++;
         showStep(currentStep)
       };
+
+      /*if (currentStep === 4 && age < 18){
+
+        if (age < 18){ // 
+        currentStep++;
+        showStep(currentStep);
+        }
+      }*/
+
+      // activePage.querySelectorAll('.alert').innerText = '';
     }
-    // Simulate pages in form
+    // Define categories for exclusion
     let titleField = document.getElementById('title-input-field');
+    let spchPage = document.getElementById('spch-page');
+  
+
+    // Simulate pages in form
     function showStep(stepIndex) {
+
+      let currentAge = parseInt(document.getElementById('age-input').value) || 0;
+
       steps.forEach((step, index) => {
         if (index == stepIndex) {
           step.classList.add('active');
@@ -335,13 +356,23 @@
           step.classList.remove('active');
         }
         // Only show title selection for ages above 13
-
-        let age = parseInt(document.getElementById('age-input').value) || 0;
-        if (age < 13) {
+        if (currentAge < 13) {
           titleField.style.display = 'none';
         } else {
           titleField.style.display = 'block';
         }
+
+        // Restore display of page
+        spchPage.style.display = '';
+        // Only show spouse/children selection for ages above 18
+        /*
+        if (age < 18) {
+          spchPage.style.display = 'none';
+        } else {
+          spchPage.style.display = 'block';
+        }
+        */
+
         // Water level rises with each question
         let oceanHeight = ((13 * stepIndex + 15))
         ocean = document.getElementById("ocean")
@@ -396,7 +427,7 @@
         .then(response => response.json()) //Parsing incoming stream
         .then(data => { // Dictionary from Flask
           document.getElementById('prediction-result').innerText = data.message;
-          console.log("Server says: ", data);
+          console.log("Server says: ", data); // Verify match
           showStep(6)
           currentStep = 6;
           showStep(currentStep);
@@ -405,11 +436,26 @@
           } else if (data.outcome === 1) {
             document.getElementById('ocean').style.height = '5vh';
           }
-
-
+          
         })
-
+        
     }
+
+     // New prediction
+      function newPrediction(){
+        showStep(0);
+        currentStep = 0;
+        showStep(currentStep);
+
+        // Clear input fields
+        document.querySelectorAll('input[type="text"]').forEach(input => {input.value = ''}); // Query selector all returns list
+        document.querySelectorAll('input[type="number"]').forEach(input => {input.value = ''}); 
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {radio.checked = false});
+        document.querySelectorAll('select').forEach(dropdown => {dropdown.selectedIndex = 0});
+        document.querySelectorAll('.alert').forEach(alert => {alert.innerText = ''});
+
+      }
+
 
   </script>
 
