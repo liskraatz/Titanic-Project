@@ -78,7 +78,7 @@ h3{
   margin-top: auto;
 }
 
-.next-button, .back-button, .new-prediction{
+.next-button, .back-button, .new-prediction, .show-graphs{
   margin: 1em 0.5em 1em 0;
   padding: 0.5em 1.2em 0.5em 1.2em;
   border: 1px solid white;
@@ -87,7 +87,7 @@ h3{
   font-size: 1em;
 }
 
-.next-button:hover, .back-button:hover, .new-prediction:hover{
+.next-button:hover, .back-button:hover, .new-prediction:hover, .show-graphs:hover{
   background-color: #85d8ef;
 }
 
@@ -211,3 +211,41 @@ input[type="radio"]:checked {
  
 }
 
+/* graphs section */
+#graphs-container{
+  display: none;
+  flex-wrap: wrap;
+  gap: 1.5em;
+  justify-content: center;
+  margin-top: 2em;
+}
+
+.chart-card{
+  background-color: white;
+  border: 1px solid #dcdcdc;
+  border-radius: 0.5em;
+  padding: 1em;
+  width: 100%;
+  max-width: 400px;
+  opacity: 0;
+  transform: translateY(15px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.chart-card.show{
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.chart-card h4{
+  text-align: center;
+  font-weight: normal;
+  margin-bottom: 0.5em;
+  font-size: 1.1em;
+}
+
+#other-explanation{
+  font-size: 0.95em;
+  margin-bottom: 1em;
+  max-width: 500px;
+}

@@ -9,6 +9,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Prata&display=swap" rel="stylesheet">
+
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
 <header>
@@ -72,7 +74,7 @@
         </div>
 
         <div class="radio">
-          <input type="radio" class="sex" name="sex" value="0" id="sex-other"
+          <input type="radio" class="sex" name="sex" value="2" id="sex-other"
             data-error='Please choose an option to continue.' required>
           <label for="sex-other">Other</label>
         </div>
@@ -213,9 +215,29 @@
   <div class="form-step">
     <div>
       <h3 id="prediction-result"></h3>
+        <p id="other-explanation" style="display: none;"></p>
       <div class="buttons">
         <button class="back-button" onclick="navigateBack()">Back</button>
+        <button class="show-graphs" onclick="showGraphs()">View Graphs</button>
         <button class="new-prediction" onclick="newPrediction()">Start new prediction</button>
+      </div>
+      <div id="graphs-container">
+        <div class="charts-card">
+          <h4>By Class</h4>
+          <canvas id="classChart"></canvas>
+        </div>
+        <div class="charts-card">
+          <h4>By Sex</h4>
+          <canvas id="sexChart"></canvas>
+        </div>
+        <div class="charts-card">
+          <h4>By Age</h4>
+          <canvas id="ageChart"></canvas>
+        </div>
+        <div class="charts-card">
+          <h4>By Family Size</h4>
+          <canvas id="familyChart"></canvas>
+        </div>
       </div>
     </div>
   </div>
@@ -231,6 +253,31 @@
     // Form Navigation 
     let currentStep = 0
     let steps = document.querySelectorAll('.form-step');
+
+    // keeps track of the last prediction for graph highlights
+    let lastUserStats = null
+    let isOtherResult = false;
+    let chartInstances = {};
+
+    // chart styling
+    Chart.defaults.font.family = "Prata, sans-serif";
+    Chart.defaults.color = '#151515';
+    Chart.defaults.plugins.legend.display = false;
+
+    // draws a little ship above the bars
+    const shipPlugin = {
+      id: 'shipPlugin',
+      afterDatasetDraw(chart) {
+        const ctx = chart.ctx;
+        const meta = chart.getDatasetMeta(0);
+        meta.data.forEach(bar => {
+          ctx.font = '18px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText('🚢', bar.x, bar.y - 8);
+        });
+      }
+    };
+    Chart.register(shipPlugin);
 
     function navigateBack() {
       if (currentStep > 0) {
@@ -415,31 +462,130 @@
       };
 
 
-      // Sending data in background 
+      // Sending data in background
       // Fetch = built-in-browser API to make HTTP requests
       fetch('/predict', { // Target URL
         method: 'POST', // Sending data to server
         headers: {
           'Content-Type': 'application/json' // Format so flaks knows how to read
         },
-        body: JSON.stringify(passengerData) // Convert to raw text string for transport        
+        body: JSON.stringify(passengerData) // Convert to raw text string for transport
       })
         .then(response => response.json()) //Parsing incoming stream
         .then(data => { // Dictionary from Flask
           document.getElementById('prediction-result').innerText = data.message;
           console.log("Server says: ", data); // Verify match
+
+          lastUserStats = data.userStats;
+          isOtherResult = data.isOther;
+
+          let explanation = document.getElementById('other-explanation');
+          if (data.isOther) {
+            explanation.style.display = 'block';
+            explanation.innerText = 'Explanation will go here (Lisa will add i hope...)';
+            let bothSurvived = (data.maleOutcome === 1 && data.femaleOutcome === 1);
+            document.getElementById('ocean').style.height = bothSurvived ? '5vh' : '95vh';
+          } else {
+            explanation.style.display = 'none';
+            document.getElementById('ocean').style.height = data.outcome === 0 ? '95vh' : '5vh';
+          } 
+
           showStep(6)
           currentStep = 6;
           showStep(currentStep);
-          if (data.outcome === 0) {
-            document.getElementById('ocean').style.height = '95vh';
-          } else if (data.outcome === 1) {
-            document.getElementById('ocean').style.height = '5vh';
-          }
-          
         })
-        
+
     }
+
+     // Shows the graphs, one card at a time
+    function showGraphs() {
+      document.getElementById('graphs-container').style.display = 'flex';
+
+      fetch('/stats')
+        .then(response => response.json())
+        .then(stats => {
+          renderCharts(stats);
+
+          let cards = document.querySelectorAll('.chart-card');
+          cards.forEach((card, i) => {
+            setTimeout(() => {
+              card.classList.add('show');
+            }, i * 300);
+          });
+        });
+    }
+
+    function makeBarChart(canvasId, labels, values, highlightList) {
+      if (chartInstances[canvasId]) {
+        chartInstances[canvasId].destroy();
+      }
+
+      let colors = labels.map(l => highlightList.includes(l) ? '#73c1d7' : '#dcdcdc');
+      let borderColors = labels.map(l => highlightList.includes(l) ? '#153970' : '#dcdcdc');
+
+      chartInstances[canvasId] = new Chart(document.getElementById(canvasId), {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Survival Rate (%)',
+            data: values,
+            backgroundColor: colors,
+            borderColor: borderColors,
+            borderWidth: 2,
+            borderRadius: 6,
+            maxBarThickness: 50
+          }]
+        },
+        options: {
+          responsive: true,
+          animation: {
+            duration: 1200,
+            easing: 'easeOutQuad'
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 100,
+              grid: { color: '#eeeeee' },
+              ticks: { callback: value => value + '%' }
+            },
+            x: {
+              grid: { display: false }
+            }
+          },
+          plugins: {
+            tooltip: {
+              backgroundColor: '#153970',
+              callbacks: {
+                label: context => context.parsed.y + '% survived'
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function renderCharts(stats) {
+      makeBarChart('classChart', ['1', '2', '3'],
+        [stats.class['1'], stats.class['2'], stats.class['3']],
+        [String(lastUserStats.pclass)]);
+
+      let sexHighlight = isOtherResult ? ['male', 'female'] : [lastUserStats.sex];
+      makeBarChart('sexChart', ['male', 'female'],
+        [stats.sex.male, stats.sex.female],
+        sexHighlight);
+
+      let ageLabels = Object.keys(stats.ageGroup);
+      makeBarChart('ageChart', ageLabels,
+        ageLabels.map(l => stats.ageGroup[l]),
+        [lastUserStats.ageGroup]);
+
+      let famLabels = Object.keys(stats.familySize);
+      makeBarChart('familyChart', famLabels,
+        famLabels.map(l => stats.familySize[l]),
+        [String(lastUserStats.familySize)]);
+    } 
 
      // New prediction
       function newPrediction(){
@@ -449,11 +595,13 @@
 
         // Clear input fields
         document.querySelectorAll('input[type="text"]').forEach(input => {input.value = ''}); // Query selector all returns list
-        document.querySelectorAll('input[type="number"]').forEach(input => {input.value = ''}); 
+        document.querySelectorAll('input[type="number"]').forEach(input => {input.value = ''});
         document.querySelectorAll('input[type="radio"]').forEach(radio => {radio.checked = false});
         document.querySelectorAll('select').forEach(dropdown => {dropdown.selectedIndex = 0});
         document.querySelectorAll('.alert').forEach(alert => {alert.innerText = ''});
-
+        document.querySelectorAll('.chart-card').forEach(card => {card.classList.remove('show')});
+        document.getElementById('other-explanation').style.display = 'none'; 
+        document.getElementById('graphs-container').style.display = 'none';
       }
 
 
