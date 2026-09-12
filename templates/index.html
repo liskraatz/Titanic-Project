@@ -1,348 +1,612 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8">
-    <title>Titanic AI Prediction Model</title>
-    <link rel="stylesheet" href="/static/css/style.css">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Prata&display=swap" rel="stylesheet">
-  </head>
+<head>
+  <meta charset="UTF-8">
+  <title>Titanic AI Prediction Model</title>
+  <link rel="stylesheet" href="/static/css/style.css">
 
-  <header>
-    <h1>Titanic Survival Prediction</h1>
-  </header>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Prata&display=swap" rel="stylesheet">
 
-  <body>
-<!--Page 1-->  
-    <!--Name-->
-    <div class="form-step active">
-      <div>
-        <div class="text-input">
-          <h3 for="name">Enter your Name</h3>
-          <input type="text" name="name" id="name-input" placeholder="Name" data-error="Please enter your name to continue."><br>
-          <p class="alert"></p><br>
-        </div>
-        <div class="buttons">
-          <button class="next-button" onclick="navigateForward()">Next</button>
-        </div>
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<header>
+  <h1>Titanic Survival Prediction</h1>
+</header>
+
+<body>
+  <!--Page 1-->
+  <!--Name-->
+  <div class="form-step active">
+    <div>
+      <div class="text-input">
+        <h3 for="name">Enter your Name</h3>
+        <input type="text" name="name" id="name-input" placeholder="Name"
+          data-error="Please enter your name to continue."><br>
+        <p class="alert"></p><br>
+      </div>
+      <div class="buttons">
+        <button class="next-button" onclick="navigateForward()">Next</button>
       </div>
     </div>
+  </div>
 
-<!--Page 2-->  
-    <div class="form-step">
-      <div>
-        <!--Sex-->
-          <h3>Sex</h3>
+  <!--Page 2-->
+  <div class="form-step">
+    <div>
+      <!--Age-->
+      <div class="number-input">
+        <h3>Age</h3>
+        <input type="number" name="age" id="age-input" placeholder="Age" min="0" max="100" size="3"
+          data-error="Age must be between 0 and 100."><br>
+        <p class="alert"></p><br>
+      </div>
 
-          <div class="radio-input horizontal">
-
-          <div class="radio">
-            <input type="radio" class="sex" name="sex" value="0" id="sex-male" data-error='Please choose an option to continue.' required>
-            <label for="sex-male">Male</label>
-          </div>
-
-          <div class="radio">
-            <input type="radio" class="sex" name="sex" value="1" id="sex-female" data-error='Please choose an option to continue.' required>
-            <label for="sex-female">Female</label>
-          </div>
-
-          <div class="radio">
-            <input type="radio" class="sex" name="sex" value="0" id="sex-other" data-error='Please choose an option to continue.' required>
-            <label for="sex-other">Other</label>
-          </div>
-          <p class="alert"></p><br>
-        </div>
-        
-
-        <!--Title-->
-        <div class="select-input">
-          <h3>Title</h3>
-          <select id="title-input" name="title" data-error='Please choose a title to continue. You can also choose "None".'>
-            <option value="0" selected disabled>Please choose a title</option>
-            <option value="1">Mr</option>
-            <option value="2">Ms</option>
-            <option value="3">Mrs</option>
-            <option value="4">None</option>
-            <option value="5">VIP</option>
-            <option value="6">Professional</option>
-          </select><br>
-          <p class="alert"></p><br>
-        </div>
-
-        <div class="buttons">
-          <button class="back-button" onclick="navigateBack()">Back</button>
-          <button class="next-button" onclick="navigateForward()">Next</button>
-        </div>
+      <div class="buttons">
+        <button class="back-button" onclick="navigateBack()">Back</button>
+        <button class="next-button" onclick="navigateForward()">Next</button>
       </div>
     </div>
+  </div>
 
-<!--Page 3-->  
-    <div class="form-step">
-      <div>
-        <!--Age-->
-        <div class="number-input">
-          <h3>Age</h3>
-          <input type="number" name="age" id="age-input" placeholder="Age" min="0" max="100" size="3" data-error="Age must be between 0 and 100."><br>
-          <p class="alert"></p><br>
+
+  <!--Page 3-->
+  <div class="form-step">
+    <div>
+      <!--Sex-->
+      <h3>Sex</h3>
+
+      <div class="radio-input horizontal">
+
+        <div class="radio">
+          <input type="radio" class="sex" name="sex" value="0" id="sex-male"
+            data-error='Please choose an option to continue.' required>
+          <label for="sex-male">Male</label>
         </div>
 
-        <div class="buttons">
-          <button class="back-button" onclick="navigateBack()">Back</button>
-          <button class="next-button" onclick="navigateForward()">Next</button>
+        <div class="radio">
+          <input type="radio" class="sex" name="sex" value="1" id="sex-female"
+            data-error='Please choose an option to continue.' required>
+          <label for="sex-female">Female</label>
         </div>
+
+        <div class="radio">
+          <input type="radio" class="sex" name="sex" value="2" id="sex-other"
+            data-error='Please choose an option to continue.' required>
+          <label for="sex-other">Other</label>
+        </div>
+        <p class="alert"></p><br>
+      </div>
+
+
+      <!--Title-->
+      <div class="select-input" id="title-input-field">
+        <h3>Title</h3>
+        <select id="title-input" name="title"
+          data-error='Please choose a title to continue. You can also choose "None".'>
+          <option value="0" selected disabled>Please choose a title</option>
+          <option value="1">Mr</option>
+          <option value="2">Ms</option>
+          <option value="3">Mrs</option>
+          <option value="6">None</option> <!--Same value as professional to work with model-->
+          <option value="5">VIP</option>
+          <option value="6">Professional</option>
+        </select><br>
+        <p class="alert"></p><br>
+      </div>
+
+      <div class="buttons">
+        <button class="back-button" onclick="navigateBack()">Back</button>
+        <button class="next-button" onclick="navigateForward()">Next</button>
       </div>
     </div>
+  </div>
 
-<!--Page 4-->  
-    <div class="form-step">
-      <div>
-        <!--Travel Comfort-->
-        <h3>How would you like to travel?</h3>
 
-        <div class="radio-input vertical">
+  <!--Page 4-->
+  <div class="form-step">
+    <div>
+      <!--Travel Comfort-->
+      <h3>How would you like to travel?</h3>
 
-          <div class="radio">
-            <input type="radio" class="travel-comfort" name="class" value="1" data-error='Please choose an option to continue.' required>
-            <label for="1">I'd rough it to save money</label><br>
-          </div>
+      <div class="radio-input vertical">
 
-          <div class="radio">
-            <input type="radio" class="travel-comfort" name="class" value="2" data-error='Please choose an option to continue.' required>
-            <label for="2">Comfortable but not extravagant</label><br>
-          </div>
-
-          <div class="radio">
-            <input type="radio" class="travel-comfort" name="class" value="3" data-error='Please choose an option to continue.' required>
-            <label for="2">Nothing but the best</label><br>
-          </div>
-          <p class="alert"></p><br>
+        <div class="radio">
+          <input type="radio" class="travel-comfort" name="class" value="3"
+            data-error='Please choose an option to continue.' required>
+          <label for="1">I'd rough it to save money</label><br>
         </div>
 
-        <div class="buttons">
-          <button class="back-button" onclick="navigateBack()">Back</button>
-          <button class="next-button" onclick="navigateForward()">Next</button>
+        <div class="radio">
+          <input type="radio" class="travel-comfort" name="class" value="2"
+            data-error='Please choose an option to continue.' required>
+          <label for="2">Comfortable but not extravagant</label><br>
         </div>
+
+        <div class="radio">
+          <input type="radio" class="travel-comfort" name="class" value="1"
+            data-error='Please choose an option to continue.' required>
+          <label for="2">Nothing but the best</label><br>
+        </div>
+        <p class="alert"></p><br>
+      </div>
+
+      <div class="buttons">
+        <button class="back-button" onclick="navigateBack()">Back</button>
+        <button class="next-button" onclick="navigateForward()">Next</button>
       </div>
     </div>
+  </div>
 
-<!--Page 5-->  
-    <div class="form-step">
-      <div>
+  <!--Page 5-->
+  <div class="form-step">
+    <div>
       <!--Siblings-->
-        <div class="number-input">
-          <h3>How many siblings do you have?</h3>
+      <div class="number-input">
+        <h3>How many siblings do you have?</h3>
 
-          <input type="number" id="sib-input" name="sib" min="0" max="10" size="3" data-error='If you have none, please enter "0"'><br>
-          <p class="alert"></p><br>
-        </div>
+        <input type="number" id="sib-input" name="sib" min="0" max="10" size="3"
+          data-error='If you have none, please enter "0"'><br>
+        <p class="alert"></p><br>
+      </div>
       <!--Parents-->
       <h3>Are you travelling with your parents?</h3>
-        <div class="radio-input horizontal">
-          <div class="radio">
-            <input type="radio" class="pa-input" name="pa" value="1" data-error='Please choose an option to continue.' required>
-            <label for="1">Yes</label>
-          </div>
-
-          <div class="radio">
-            <input type="radio" class="pa-input" name="pa" value="0" data-error='Please choose an option to continue.' required>
-            <label for="0">No</label><br>
-          </div>
-          <p class="alert"></p><br>
+      <div class="radio-input horizontal">
+        <div class="radio">
+          <input type="radio" class="pa-input" name="pa" value="1" data-error='Please choose an option to continue.'
+            required>
+          <label for="1">Yes</label>
         </div>
 
-        <div class="buttons">
-          <button class="back-button" onclick="navigateBack()">Back</button>
-          <button class="next-button" onclick="navigateForward()">Next</button>
+        <div class="radio">
+          <input type="radio" class="pa-input" name="pa" value="0" data-error='Please choose an option to continue.'
+            required>
+          <label for="0">No</label><br>
+        </div>
+        <p class="alert"></p><br>
+      </div>
+
+      <div class="buttons">
+        <button class="back-button" onclick="navigateBack()">Back</button>
+        <button class="next-button" onclick="navigateForward()">Next</button>
+      </div>
+    </div>
+  </div>
+
+  <!--Page 6-->
+  <div class="form-step" id="spch-page">
+    <div>
+      <h3>Do you have a spouse or partner?</h3>
+      <div class="radio-input horizontal">
+
+        <div class="radio">
+          <input type="radio" class="sp-input" name="sp" id="yes-sp" value="1"
+            data-error='Please choose an option to continue.'>
+          <label for="yes-sp">Yes</label>
+        </div>
+
+        <div class="radio">
+          <input type="radio" class="sp-input" name="sp" id="no-sp" value="0"
+            data-error='Please choose an option to continue.'>
+          <label for="no-sp">No</label>
+        </div>
+        <p class="alert"></p><br>
+      </div>
+
+      <div class="number-input">
+        <h3>How many children do you have?</h3>
+        <input type="number" name="ch" id="ch-input" min="0" max="20" size="3"
+          data-error='If you have no children, please enter "0"'><br>
+        <p class="alert"></p><br><br>
+      </div>
+
+      <!--Submit-->
+      <div class="buttons">
+        <button class="back-button" onclick="navigateBack()">Back</button>
+        <button class="predictSurv" onclick="sendPredictionData()">Predict Survival</button>
+      </div>
+    </div>
+  </div>
+
+  <!--Page 7 - RESULTS -->
+  <div class="form-step">
+    <div>
+      <h3 id="prediction-result"></h3>
+        <p id="other-explanation" style="display: none;"></p>
+      <div class="buttons">
+        <button class="back-button" onclick="navigateBack()">Back</button>
+        <button class="show-graphs" onclick="showGraphs()">View Graphs</button>
+        <button class="new-prediction" onclick="newPrediction()">Start new prediction</button>
+      </div>
+      <div id="graphs-container">
+        <div class="charts-card">
+          <h4>By Class</h4>
+          <canvas id="classChart"></canvas>
+        </div>
+        <div class="charts-card">
+          <h4>By Sex</h4>
+          <canvas id="sexChart"></canvas>
+        </div>
+        <div class="charts-card">
+          <h4>By Age</h4>
+          <canvas id="ageChart"></canvas>
+        </div>
+        <div class="charts-card">
+          <h4>By Family Size</h4>
+          <canvas id="familyChart"></canvas>
         </div>
       </div>
     </div>
+  </div>
 
-<!--Page 6-->
-    <div class="form-step">
-      <div>
-        <h3>Do you have a spouse or partner?</h3>
-          <div class="radio-input horizontal">
+  <div id="ocean">
+    <svg class="wave" viewBox="0 0 1200 120" preserveAspectRatio="none">
+      <path d="M0,60 C150,100 350,20 600,60 C850,100 1050,20 1200,60 L1200,120 L0,120 Z">
+      </path>
+    </svg>
+  </div>
 
-          <div class="radio">
-            <input type="radio" class="sp-input" name="sp" id="yes-sp" value="1" data-error='Please choose an option to continue.' required>
-            <label for="yes-sp">Yes</label>
-          </div>
+  <script>
+    // Form Navigation 
+    let currentStep = 0
+    let steps = document.querySelectorAll('.form-step');
 
-          <div class="radio">
-            <input type="radio" class="sp-input" name="sp" id="no-sp" value="0" data-error='Please choose an option to continue.' required>
-            <label for="no-sp">No</label>
-          </div>
-          <p class="alert"></p><br>
-        </div>
+    // keeps track of the last prediction for graph highlights
+    let lastUserStats = null
+    let isOtherResult = false;
+    let chartInstances = {};
 
-        <div class="number-input">
-          <h3>How many children do you have?</h3>
-          <input type="number" name="ch" id="ch-input" min="0" max="20"size="3" data-error='If you have no children, please enter "0"'><br>
-          <p class="alert"></p><br><br>
-        </div>
+    // chart styling
+    Chart.defaults.font.family = "Prata, sans-serif";
+    Chart.defaults.color = '#151515';
+    Chart.defaults.plugins.legend.display = false;
 
-        <!--Submit-->
-        <div class="buttons">
-          <button class="back-button" onclick="navigateBack()">Back</button>
-          <button class="predictSurv" onclick="sendPredictionData()">Predict Survival</button>
-        </div>
-      </div>
-    </div>
+    // draws a little ship above the bars
+    const shipPlugin = {
+      id: 'shipPlugin',
+      afterDatasetDraw(chart) {
+        const ctx = chart.ctx;
+        const meta = chart.getDatasetMeta(0);
+        meta.data.forEach(bar => {
+          ctx.font = '18px sans-serif';
+          ctx.textAlign = 'center';
+          ctx.fillText('🚢', bar.x, bar.y - 8);
+        });
+      }
+    };
+    Chart.register(shipPlugin);
 
-    <div id="ocean">
-      <svg class="wave" viewBox="0 0 1200 120" preserveAspectRatio="none">
-        <path d="M0,60 C150,100 350,20 600,60 C850,100 1050,20 1200,60 L1200,120 L0,120 Z">
-        </path>
-      </svg>
-    </div>
-
-    <script>
-      // Form Navigation 
-      let currentStep = 0
-      let steps = document.querySelectorAll('.form-step');
-
-      function navigateBack(){
-        if (currentStep > 0){
-          currentStep--;
-          showStep(currentStep)
-        };
+    function navigateBack() {
+      if (currentStep > 0) {
+        currentStep--;
+        showStep(currentStep)
       };
+    };
 
-       function navigateForward(){
-        // User input validation
-        let activePage = steps[currentStep];
-        let inputList = activePage.querySelectorAll('input, select');
-        let radioGroup = activePage.querySelector('input[type = "radio"]');
-        let isValid = true;
+    function validateInput(){
+      let activePage = steps[currentStep];
+      let inputList = activePage.querySelectorAll('input, select');
+      let radioGroup = activePage.querySelector('input[type = "radio"]');
+      let isValid = true;
+      // Validate if textbox is not empty
+      for (individualInput of inputList) {
+        let container = individualInput.closest('.select-input, .radio-input, .number-input, .text-input'); // Places error message in correct container
+        let alertBox = container.querySelector('.alert')
 
-        // Validate if textbox is not empty
-        for (individualInput of inputList){
-          let container = individualInput.closest('.select-input, .radio-input, .number-input, .text-input'); // Places error message in correct container
-          let alertBox = container.querySelector('.alert')
-          if (individualInput.type == 'text'){
-            if (individualInput.value == ''){
-              isValid = false;
-              if (container) {
-                    if(alertBox){
-                      alertBox.innerText = individualInput.dataset.error;
-                    }
-                  }
-            }
-          }
-          // Validate if number is within range and not zero
-          else if(individualInput.type == 'number'){
-            if (individualInput.value === ''){
-              isValid = false;
-              if (container) {
-                    if(alertBox){
-                      alertBox.innerText = individualInput.dataset.error;
-                    }
-                  }
-            }else if (individualInput.value != ''){
-              userNumber = parseInt(individualInput.value)
-              if (userNumber > individualInput.max || userNumber < individualInput.min){
-                isValid = false;
-                if (container) {
-                    if(alertBox){
-                      alertBox.innerText = individualInput.dataset.error;
-                    }
-                  }
+        if (individualInput.type == 'text') {
+          if (individualInput.value == '') {
+            isValid = false;
+            if (container) {
+              if (alertBox) {
+                alertBox.innerText = individualInput.dataset.error;
               }
             }
-          }
-          // Validate that a choice from the select menu has been chosen
-          else if(individualInput.type == 'select-one'){
-             if (individualInput.value == 0){
-              isValid = false;
-              if (container) {
-                    if(alertBox){
-                      alertBox.innerText = individualInput.dataset.error;
-                    }
-                  }
-            }
-          }
-          // Validate that one radio button is checked
-          else if (radioGroup != null){
-            if (activePage.querySelector('input[type="radio"]:checked') == null){
-                  isValid = false;
-                
-                  if (container) {
-                    if(alertBox){
-                      alertBox.innerText = individualInput.dataset.error;
-                    }
-                  }
-              }
-            }
-
-          if (isValid == false){
-            return;
           }
         }
+        // Validate if number is within range and not zero
+        else if (individualInput.type == 'number') {
+          if (individualInput.value === '') {
+            isValid = false;
+            if (container) {
+              if (alertBox) {
+                alertBox.innerText = individualInput.dataset.error;
+              }
+            }
+          } else if (individualInput.value != '') {
+            userNumber = parseInt(individualInput.value)
+            if (userNumber > individualInput.max || userNumber < individualInput.min) {
+              isValid = false;
+              if (container) {
+                if (alertBox) {
+                  alertBox.innerText = individualInput.dataset.error;
+                }
+              }
+            }
+          }
+        }
+        // Validate that a choice from the select menu has been chosen
+        else if (individualInput.type == 'select-one') {
+          if (titleField.style.display == 'block') {
+            if (individualInput.value == 0) {
+              isValid = false;
+              if (container) {
+                if (alertBox) {
+                  alertBox.innerText = individualInput.dataset.error;
+                }
+              }
+            }
+          }
+        }
+      }
+        // Validate that one radio button is checked
+        if (radioGroup != null) {
+          if (activePage.querySelector('input[type="radio"]:checked') == null) {
+            isValid = false;
 
-        if (currentStep < (steps.length - 1)){
-          currentStep++;
-          showStep(currentStep)
-        };
+            let radioContainer = activePage.querySelector('.radio-input')
+            if (radioContainer) {
+              let radioAlert = radioContainer.querySelector('.alert')
+              if (radioAlert) {
+                radioAlert.innerText = radioGroup.dataset.error;
+              }
+            }
+          }
+        }
+        return isValid;
+    };
+
+
+
+    function navigateForward() {
+
+      // let age = parseInt(document.getElementById('age-input').value) || 0;
+      
+      // User input validation
+      validateInput()
+      if (!validateInput()) {
+        return;
+      }
+      
+      // Navigate pages
+      if (currentStep < (steps.length - 1)) {
+        currentStep++;
+        showStep(currentStep)
       };
 
+      /*if (currentStep === 4 && age < 18){
+
+        if (age < 18){ // 
+        currentStep++;
+        showStep(currentStep);
+        }
+      }*/
+
+      // activePage.querySelectorAll('.alert').innerText = '';
+    }
+    // Define categories for exclusion
+    let titleField = document.getElementById('title-input-field');
+    let spchPage = document.getElementById('spch-page');
+  
+
     // Simulate pages in form
-      function showStep(stepIndex){
-        steps.forEach((step, index) => {
-          if(index == stepIndex){
-            step.classList.add('active');
-          } else{
-            step.classList.remove('active');
-          }
-          let oceanHeight = ((13 * stepIndex + 25))
-          ocean = document.getElementById("ocean")
-          ocean.style.height = oceanHeight + "vh"
-      })};
+    function showStep(stepIndex) {
+
+      let currentAge = parseInt(document.getElementById('age-input').value) || 0;
+
+      steps.forEach((step, index) => {
+        if (index == stepIndex) {
+          step.classList.add('active');
+        } else {
+          step.classList.remove('active');
+        }
+        // Only show title selection for ages above 13
+        if (currentAge < 13) {
+          titleField.style.display = 'none';
+        } else {
+          titleField.style.display = 'block';
+        }
+
+        // Restore display of page
+        spchPage.style.display = '';
+        // Only show spouse/children selection for ages above 18
+        /*
+        if (age < 18) {
+          spchPage.style.display = 'none';
+        } else {
+          spchPage.style.display = 'block';
+        }
+        */
+
+        // Water level rises with each question
+        let oceanHeight = ((13 * stepIndex + 15))
+        ocean = document.getElementById("ocean")
+        ocean.style.height = oceanHeight + "vh"
+      })
+
+    };
 
 
-      // Get data from user input
-      function sendPredictionData(){
-        let name = document.getElementById('name-input').value;
-        let sex = parseInt(document.querySelector('.sex:checked').value);
-        let age = parseInt(document.getElementById('age-input').value) || 0;
-        let title = parseInt(document.getElementById('title-input').value);
-        let travelComfort = parseInt(document.querySelector('.travel-comfort:checked').value);
-        let sib = parseInt(document.getElementById('sib-input').value) || 0;
-        let pa = parseInt(document.querySelector('.pa-input:checked').value) || 0;
-        let sp = parseInt(document.querySelector('.sp-input:checked').value) || 0;
-        let ch = parseInt(document.getElementById('ch-input').value) || 0;
+    // Get data from user input
+    function sendPredictionData() {
 
-
-        const passengerData = {
-          name: name,
-          sex: sex,
-          age: age,
-          title: title,
-          'travel-comfort': travelComfort,
-          sib: sib,
-          pa: pa,
-          sp: sp,
-          ch: ch,
-        };
-        
-        // Sending data in background 
-        // Fetch = built-in-browser API to make HTTP requests
-        fetch('/predict', { // Target URL
-          method: 'POST', // Sending data to server
-          headers: {
-            'Content-Type': 'application/json' // Format so flaks knows how to read
-          },
-          body: JSON.stringify(passengerData) // Convert to raw text string for transport        
-          })
-          .then(response => response.json()) //Parsing incoming stream
-          .then(data => { // Dictionary from Flask
-            console.log("Server says: ", data);
-          });
+      // Validating input of last page
+      validateInput()
+      if (!validateInput()) {
+        return;
       }
 
-    </script>
+      let name = document.getElementById('name-input').value;
+      let sex = parseInt(document.querySelector('.sex:checked').value);
+      let age = parseInt(document.getElementById('age-input').value) || 0;
+      let title = parseInt(document.getElementById('title-input').value);
+      let travelComfort = parseInt(document.querySelector('.travel-comfort:checked').value);
+      let sib = parseInt(document.getElementById('sib-input').value) || 0;
+      let pa = parseInt(document.querySelector('.pa-input:checked').value) || 0;
+      let sp = parseInt(document.querySelector('.sp-input:checked').value) || 0;
+      let ch = parseInt(document.getElementById('ch-input').value) || 0;
 
-  </body>
+
+      const passengerData = {
+        name: name,
+        sex: sex,
+        age: age,
+        title: title,
+        'travel-comfort': travelComfort,
+        sib: sib,
+        pa: pa,
+        sp: sp,
+        ch: ch,
+      };
+
+
+      // Sending data in background
+      // Fetch = built-in-browser API to make HTTP requests
+      fetch('/predict', { // Target URL
+        method: 'POST', // Sending data to server
+        headers: {
+          'Content-Type': 'application/json' // Format so flaks knows how to read
+        },
+        body: JSON.stringify(passengerData) // Convert to raw text string for transport
+      })
+        .then(response => response.json()) //Parsing incoming stream
+        .then(data => { // Dictionary from Flask
+          document.getElementById('prediction-result').innerText = data.message;
+          console.log("Server says: ", data); // Verify match
+
+          lastUserStats = data.userStats;
+          isOtherResult = data.isOther;
+
+          let explanation = document.getElementById('other-explanation');
+          if (data.isOther) {
+            explanation.style.display = 'block';
+            explanation.innerText = 'Explanation will go here (Lisa will add i hope...)';
+            let bothSurvived = (data.maleOutcome === 1 && data.femaleOutcome === 1);
+            document.getElementById('ocean').style.height = bothSurvived ? '5vh' : '95vh';
+          } else {
+            explanation.style.display = 'none';
+            document.getElementById('ocean').style.height = data.outcome === 0 ? '95vh' : '5vh';
+          } 
+
+          showStep(6)
+          currentStep = 6;
+          showStep(currentStep);
+        })
+
+    }
+
+     // Shows the graphs, one card at a time
+    function showGraphs() {
+      document.getElementById('graphs-container').style.display = 'flex';
+
+      fetch('/stats')
+        .then(response => response.json())
+        .then(stats => {
+          renderCharts(stats);
+
+          let cards = document.querySelectorAll('.chart-card');
+          cards.forEach((card, i) => {
+            setTimeout(() => {
+              card.classList.add('show');
+            }, i * 300);
+          });
+        });
+    }
+
+    function makeBarChart(canvasId, labels, values, highlightList) {
+      if (chartInstances[canvasId]) {
+        chartInstances[canvasId].destroy();
+      }
+
+      let colors = labels.map(l => highlightList.includes(l) ? '#73c1d7' : '#dcdcdc');
+      let borderColors = labels.map(l => highlightList.includes(l) ? '#153970' : '#dcdcdc');
+
+      chartInstances[canvasId] = new Chart(document.getElementById(canvasId), {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'Survival Rate (%)',
+            data: values,
+            backgroundColor: colors,
+            borderColor: borderColors,
+            borderWidth: 2,
+            borderRadius: 6,
+            maxBarThickness: 50
+          }]
+        },
+        options: {
+          responsive: true,
+          animation: {
+            duration: 1200,
+            easing: 'easeOutQuad'
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              max: 100,
+              grid: { color: '#eeeeee' },
+              ticks: { callback: value => value + '%' }
+            },
+            x: {
+              grid: { display: false }
+            }
+          },
+          plugins: {
+            tooltip: {
+              backgroundColor: '#153970',
+              callbacks: {
+                label: context => context.parsed.y + '% survived'
+              }
+            }
+          }
+        }
+      });
+    }
+
+    function renderCharts(stats) {
+      makeBarChart('classChart', ['1', '2', '3'],
+        [stats.class['1'], stats.class['2'], stats.class['3']],
+        [String(lastUserStats.pclass)]);
+
+      let sexHighlight = isOtherResult ? ['male', 'female'] : [lastUserStats.sex];
+      makeBarChart('sexChart', ['male', 'female'],
+        [stats.sex.male, stats.sex.female],
+        sexHighlight);
+
+      let ageLabels = Object.keys(stats.ageGroup);
+      makeBarChart('ageChart', ageLabels,
+        ageLabels.map(l => stats.ageGroup[l]),
+        [lastUserStats.ageGroup]);
+
+      let famLabels = Object.keys(stats.familySize);
+      makeBarChart('familyChart', famLabels,
+        famLabels.map(l => stats.familySize[l]),
+        [String(lastUserStats.familySize)]);
+    } 
+
+     // New prediction
+      function newPrediction(){
+        showStep(0);
+        currentStep = 0;
+        showStep(currentStep);
+
+        // Clear input fields
+        document.querySelectorAll('input[type="text"]').forEach(input => {input.value = ''}); // Query selector all returns list
+        document.querySelectorAll('input[type="number"]').forEach(input => {input.value = ''});
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {radio.checked = false});
+        document.querySelectorAll('select').forEach(dropdown => {dropdown.selectedIndex = 0});
+        document.querySelectorAll('.alert').forEach(alert => {alert.innerText = ''});
+        document.querySelectorAll('.chart-card').forEach(card => {card.classList.remove('show')});
+        document.getElementById('other-explanation').style.display = 'none'; 
+        document.getElementById('graphs-container').style.display = 'none';
+      }
+
+
+  </script>
+
+</body>
 
 </html>
