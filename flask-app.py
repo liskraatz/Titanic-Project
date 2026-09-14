@@ -10,9 +10,8 @@ titanicModel = file
 train = pd.read_csv('titanic-data-train.csv')
 train['FamilySize'] = train['SibSp'] + train['Parch'] 
 
-# normalizing the coloumn for sex if male/female text
-if train['Sex'].dtype == 'object':
-    train['Sex'] = train['Sex'].map({'male': 0, 'female': 1})
+# using replace() instead of map() so it works across pandas versions and wont wipe the coloumn if it runs twice
+train['Sex'] = train['Sex'].replace({'male': 0, 'female': 1})
 
 def get_age_group(age):
     if age < 13:
