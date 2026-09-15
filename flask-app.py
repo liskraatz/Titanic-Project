@@ -95,8 +95,8 @@ def predict_survival():
     male_outcome = int(file.predict(male_features)[0])
     female_outcome = int(file.predict(female_features)[0])
 
-    male_word = 'survived' if male_outcome == 1 else 'died'
-    female_word = 'survived' if female_outcome == 1 else 'died'
+    male_word = 'survived (male)' if male_outcome == 1 else 'died (male)'
+    female_word = 'survived (female)' if female_outcome == 1 else 'died (female)'
 
     predictionMsg = (name + ', [PLACEHOLDER] ' + male_word + ' or ' + female_word + '.')
 
