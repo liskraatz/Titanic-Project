@@ -483,6 +483,13 @@
           showStep(6)
           currentStep = 6;
           showStep(currentStep);
+
+           if (data.outcome === 0) {
+            document.getElementById('ocean').style.height = '95vh';
+          } else if (data.outcome === 1) {
+            document.getElementById('ocean').style.height = '5vh';
+          }
+          
         })
 
     }
