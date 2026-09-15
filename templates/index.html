@@ -482,7 +482,7 @@
           let explanation = document.getElementById('other-explanation');
           if (data.isOther) {
             explanation.style.display = 'block';
-            explanation.innerText = '[PLACEHOLDER FOR THE EXPLANATION]';
+            explanation.innerText = '[PLACEHOLDER FOR EXPLANATION]';
             let bothSurvived = (data.maleOutcome === 1 && data.femaleOutcome === 1);
             document.getElementById('ocean').style.height = bothSurvived ? '5vh' : '95vh';
           } else {
