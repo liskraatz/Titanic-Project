@@ -215,6 +215,18 @@
   <div class="form-step">
     <div>
       <h3 id="prediction-result"></h3>
+      <div class="buttons">
+        <button class="back-button" onclick="navigateBack()">Back</button>
+        <button class="next-button" onclick="showGraphs()">View Graphs</button>
+        <button class="new-prediction" onclick="newPrediction()">Start new prediction</button>
+      </div>
+    </div>
+  </div>
+
+  <!--Page 8 - Graphs -->
+  <div class="form-step">
+    <div>
+      <h3 id="graphs"></h3>
         <p id="other-explanation" style="display: none;"></p>
       <div id="graphs-container">
         <div class="charts-card">
@@ -236,7 +248,6 @@
       </div>
       <div class="buttons">
         <button class="back-button" onclick="navigateBack()">Back</button>
-        <button class="show-graphs" onclick="showGraphs()">View Graphs</button>
         <button class="new-prediction" onclick="newPrediction()">Start new prediction</button>
       </div>
     </div>
@@ -361,8 +372,6 @@
 
 
     function navigateForward() {
-
-      // let age = parseInt(document.getElementById('age-input').value) || 0;
       
       // User input validation
       validateInput()
@@ -376,15 +385,7 @@
         showStep(currentStep)
       };
 
-      /*if (currentStep === 4 && age < 18){
-
-        if (age < 18){ // 
-        currentStep++;
-        showStep(currentStep);
-        }
-      }*/
-
-      // activePage.querySelectorAll('.alert').innerText = '';
+   
     }
     // Define categories for exclusion
     let titleField = document.getElementById('title-input-field');
@@ -408,17 +409,6 @@
         } else {
           titleField.style.display = 'block';
         }
-
-        // Restore display of page
-        spchPage.style.display = '';
-        // Only show spouse/children selection for ages above 18
-        /*
-        if (age < 18) {
-          spchPage.style.display = 'none';
-        } else {
-          spchPage.style.display = 'block';
-        }
-        */
 
         // Water level rises with each question
         let oceanHeight = ((13 * stepIndex + 15))
@@ -499,7 +489,7 @@
 
      // Shows the graphs, one card at a time
     function showGraphs() {
-      document.getElementById('graphs-container').style.display = 'flex';
+      navigateForward(); // Show on new page after result
 
       fetch('/stats')
         .then(response => response.json())

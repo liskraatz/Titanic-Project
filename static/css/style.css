@@ -212,8 +212,9 @@ input[type="radio"]:checked {
 }
 
 /* Graphs section */
+
 #graphs-container{
-  display: none;
+  display: flex;
   flex-wrap: wrap;
   gap: 1.5em;
   justify-content: center;

@@ -98,7 +98,7 @@ def predict_survival():
     male_word = 'survived' if male_outcome == 1 else 'died'
     female_word = 'survived' if female_outcome == 1 else 'died'
 
-    predictionMsg = (name + ', explain why we chose to use both male and female here with better explanation below ' + female_word + '.')
+    predictionMsg = (name + '[In progress]' + female_word + '.')
 
     return jsonify({
       'isOther': True,
@@ -118,7 +118,7 @@ def predict_survival():
   outcome = int(prediction_array[0])
 
   if outcome == 1:
-     predictionMsg = 'Congratualtions, ' + name + ' you survived.'
+     predictionMsg = 'Congratulations, ' + name + ' you survived.'
   else:
      predictionMsg = 'Sorry, ' + name + ' you died.'
 
