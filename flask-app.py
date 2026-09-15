@@ -98,7 +98,7 @@ def predict_survival():
     male_word = 'survived' if male_outcome == 1 else 'died'
     female_word = 'survived' if female_outcome == 1 else 'died'
 
-    predictionMsg = (name + ', [PLACEHOLDER] ' + male_word + ' or ' + female_word + '.')
+    predictionMsg = (name + ', [PLACEHOLDER] ' + male_word + 'or' + female_word + '.')
 
     return jsonify({
       'isOther': True,
