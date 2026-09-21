@@ -67,6 +67,7 @@ def predict_survival():
   sex = int(data.get('sex'))
   age = int(data.get('age'))
   title = int(data.get('title', 1)) # Add default to prevent crashing
+  # child titles: Master / Miss. Applied per-run below when sex == 2.
   if age < 13:
       if sex == 0:
         title = 4
@@ -89,22 +90,36 @@ def predict_survival():
   # sex = 2 means "other" was picked, this is just now taking into consideration that option
   # since the model cant predict the other, we will run it once as male and once as female and show both
   if sex == 2:
-    male_features = [[travelComfort, 0, age, SibSp, ParCh, title]]
-    female_features = [[travelComfort, 1, age, SibSp, ParCh, title]]
+    # child title depends on which run we're doing, so set it per-run
+    male_title = 4 if age < 13 else title
+    female_title = 2 if age < 13 else title
+
+    male_features = [[travelComfort, 0, age, SibSp, ParCh, male_title]]
+    female_features = [[travelComfort, 1, age, SibSp, ParCh, female_title]]
 
     male_outcome = int(file.predict(male_features)[0])
     female_outcome = int(file.predict(female_features)[0])
 
-    male_word = 'survived (male)' if male_outcome == 1 else 'died (male)'
-    female_word = 'survived (female)' if female_outcome == 1 else 'died (female)'
-
-    predictionMsg = (name + ', [PLACEHOLDER] ' + male_word + ' or ' + female_word + '.')
+    if male_outcome == female_outcome:
+      word = 'survived' if male_outcome == 1 else 'died'
+      predictionMsg = f'{name}, you {word} either way.'
+      explanation = ('The model was run twice, once with your details recorded as male, '
+                     f'once as female. Both runs {word}, so sex was not the deciding '
+                     'factor in your case.')
+    else:
+      lived, perished = ('male', 'female') if male_outcome == 1 else ('female', 'male')
+      predictionMsg = f'{name}, your outcome depends on how you were recorded.'
+      explanation = (f'The model was run twice. Recorded as {lived} you survived; '
+                     f'recorded as {perished} you did not. The 1912 records only had two '
+                     'boxes, and sex is the single strongest predictor in this dataset, '
+                     'so the split says more about the data than about you.')
 
     return jsonify({
       'isOther': True,
       'maleOutcome': male_outcome,
       'femaleOutcome': female_outcome,
       'message': predictionMsg,
+      'explanation': explanation,
       'userStats': {
         'pclass': travelComfort,
         'ageGroup': get_age_group(age),
@@ -118,7 +133,7 @@ def predict_survival():
   outcome = int(prediction_array[0])
 
   if outcome == 1:
-     predictionMsg = 'Congratualtions, ' + name + ' you survived.'
+     predictionMsg = 'Congratulations, ' + name + ' you survived.'
   else:
      predictionMsg = 'Sorry, ' + name + ' you died.'
 
