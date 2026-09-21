@@ -3,7 +3,7 @@
 *{
   margin: 0;
   padding: 0;
-};
+}
 
 :root {
 --bg-color: white;
@@ -40,6 +40,10 @@ header{
   height: 100px;
   fill: #73c1d7;
   animation: rollWave 4s linear infinite;
+}
+
+#ocean.uncertain .wave{
+  animation-duration: 2s;
 }
 
 @keyframes rollWave {

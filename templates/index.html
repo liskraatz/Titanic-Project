@@ -114,22 +114,22 @@
 
       <div class="radio-input vertical">
 
-        <div class="radio">
-          <input type="radio" class="travel-comfort" name="class" value="3"
+                <div class="radio">
+          <input type="radio" class="travel-comfort" name="class" value="3" id="class-3"
             data-error='Please choose an option to continue.' required>
-          <label for="1">I'd rough it to save money</label><br>
+          <label for="class-3">I'd rough it to save money</label><br>
         </div>
 
         <div class="radio">
-          <input type="radio" class="travel-comfort" name="class" value="2"
+          <input type="radio" class="travel-comfort" name="class" value="2" id="class-2"
             data-error='Please choose an option to continue.' required>
-          <label for="2">Comfortable but not extravagant</label><br>
+          <label for="class-2">Comfortable but not extravagant</label><br>
         </div>
 
         <div class="radio">
-          <input type="radio" class="travel-comfort" name="class" value="1"
+          <input type="radio" class="travel-comfort" name="class" value="1" id="class-1"
             data-error='Please choose an option to continue.' required>
-          <label for="2">Nothing but the best</label><br>
+          <label for="class-1">Nothing but the best</label><br>
         </div>
         <p class="alert"></p><br>
       </div>
@@ -155,16 +155,16 @@
       <!--Parents-->
       <h3>Are you travelling with your parents?</h3>
       <div class="radio-input horizontal">
-        <div class="radio">
-          <input type="radio" class="pa-input" name="pa" value="1" data-error='Please choose an option to continue.'
-            required>
-          <label for="1">Yes</label>
+                <div class="radio">
+          <input type="radio" class="pa-input" name="pa" value="1" id="pa-yes"
+            data-error='Please choose an option to continue.' required>
+          <label for="pa-yes">Yes</label>
         </div>
 
         <div class="radio">
-          <input type="radio" class="pa-input" name="pa" value="0" data-error='Please choose an option to continue.'
-            required>
-          <label for="0">No</label><br>
+          <input type="radio" class="pa-input" name="pa" value="0" id="pa-no"
+            data-error='Please choose an option to continue.' required>
+          <label for="pa-no">No</label><br>
         </div>
         <p class="alert"></p><br>
       </div>
@@ -229,19 +229,19 @@
       <h3 id="graphs"></h3>
         <p id="other-explanation" style="display: none;"></p>
       <div id="graphs-container">
-        <div class="charts-card">
+        <div class="chart-card">
           <h4>By Class</h4>
           <canvas id="classChart"></canvas>
         </div>
-        <div class="charts-card">
+        <div class="chart-card">
           <h4>By Sex</h4>
           <canvas id="sexChart"></canvas>
         </div>
-        <div class="charts-card">
+        <div class="chart-card">
           <h4>By Age</h4>
           <canvas id="ageChart"></canvas>
         </div>
-        <div class="charts-card">
+        <div class="chart-card">
           <h4>By Family Size</h4>
           <canvas id="familyChart"></canvas>
         </div>
@@ -269,6 +269,21 @@
     let lastUserStats = null
     let isOtherResult = false;
     let chartInstances = {};
+
+    // water level config
+    const RESULT_STEP = 6;
+    const WATER = {
+      start: 15,
+      perStep: 8,  // pages 0-5 will land at 15, 23, 31, 39, 47, 55vh
+      survived: 5,
+      drowned: 95,
+      mixed: 55
+    };
+    let resultWaterLevel = null; // only until prediction is made
+
+    function setWater(vh){
+      document.getElementById('ocean').style.height = vh + 'vh';
+    }
 
     // chart styling
     Chart.defaults.font.family = "Prata, sans-serif";
@@ -302,8 +317,12 @@
       let inputList = activePage.querySelectorAll('input, select');
       let radioGroup = activePage.querySelector('input[type = "radio"]');
       let isValid = true;
+
+      // wipe any leftover errors before rechecking
+      activePage.querySelectorAll('.alert').forEach(a => a.innerText = '');
+
       // Validate if textbox is not empty
-      for (individualInput of inputList) {
+      for (let individualInput of inputList) {
         let container = individualInput.closest('.select-input, .radio-input, .number-input, .text-input'); // Places error message in correct container
         let alertBox = container.querySelector('.alert')
 
@@ -327,7 +346,7 @@
               }
             }
           } else if (individualInput.value != '') {
-            userNumber = parseInt(individualInput.value)
+            let userNumber = parseInt(individualInput.value)
             if (userNumber > individualInput.max || userNumber < individualInput.min) {
               isValid = false;
               if (container) {
@@ -374,7 +393,6 @@
     function navigateForward() {
       
       // User input validation
-      validateInput()
       if (!validateInput()) {
         return;
       }
@@ -398,32 +416,26 @@
       let currentAge = parseInt(document.getElementById('age-input').value) || 0;
 
       steps.forEach((step, index) => {
-        if (index == stepIndex) {
-          step.classList.add('active');
-        } else {
-          step.classList.remove('active');
-        }
+        step.classList.toggle('active', index === stepIndex);
+      });
+
         // Only show title selection for ages above 13
-        if (currentAge < 13) {
-          titleField.style.display = 'none';
+        titleField.style.display = currentAge <13 ? 'none' : 'block';
+
+        // once a prediction starts or exists, the result reflects the water level
+        // hopefully this fixes the graphs and back button from refilling
+        if (stepIndex >= RESULT_STEP && resultWaterLevel !== null) {
+          setWater(resultWaterLevel);
         } else {
-          titleField.style.display = 'block';
+          setWater(WATER.start + WATER.perStep * stepIndex);
         }
-
-        // Water level rises with each question
-        let oceanHeight = ((13 * stepIndex + 15))
-        ocean = document.getElementById("ocean")
-        ocean.style.height = oceanHeight + "vh"
-      })
-
-    };
+      }; 
 
 
     // Get data from user input
     function sendPredictionData() {
 
       // Validating input of last page
-      validateInput()
       if (!validateInput()) {
         return;
       }
@@ -462,33 +474,40 @@
         body: JSON.stringify(passengerData) // Convert to raw text string for transport
       })
         .then(response => response.json()) //Parsing incoming stream
-        .then(data => { // Dictionary from Flask
-          document.getElementById('prediction-result').innerText = data.message;
+                .then(data => { // Dictionary from Flask
           console.log("Server says: ", data); // Verify match
 
+          document.getElementById('prediction-result').innerText = data.message;
           lastUserStats = data.userStats;
           isOtherResult = data.isOther;
 
           let explanation = document.getElementById('other-explanation');
+          let ocean = document.getElementById('ocean');
+
           if (data.isOther) {
             explanation.style.display = 'block';
-            explanation.innerText = 'Explanation will go here (Lisa will add i hope...)';
-            let bothSurvived = (data.maleOutcome === 1 && data.femaleOutcome === 1);
-            document.getElementById('ocean').style.height = bothSurvived ? '5vh' : '95vh';
+            explanation.innerText = data.explanation;
+
+            if (data.maleOutcome === data.femaleOutcome) {
+              resultWaterLevel = data.maleOutcome === 1 ? WATER.survived : WATER.drowned;
+            } else {
+              resultWaterLevel = WATER.mixed;   // split verdict, unresolved
+            }
           } else {
             explanation.style.display = 'none';
-            document.getElementById('ocean').style.height = data.outcome === 0 ? '95vh' : '5vh';
-          } 
-
-          showStep(6)
-          currentStep = 6;
-          showStep(currentStep);
-
-           if (data.outcome === 0) {
-            document.getElementById('ocean').style.height = '95vh';
-          } else if (data.outcome === 1) {
-            document.getElementById('ocean').style.height = '5vh';
+            resultWaterLevel = data.outcome === 1 ? WATER.survived : WATER.drowned;
           }
+
+          // faster wave when the two runs disagree
+          ocean.classList.toggle('uncertain', resultWaterLevel === WATER.mixed);
+
+          currentStep = RESULT_STEP;
+          showStep(currentStep);
+        })
+        .catch(err => {
+          console.error(err);
+          document.getElementById('prediction-result').innerText =
+            'Something went wrong reaching the model. Try again.';
         })
 
     }
@@ -496,6 +515,7 @@
      // Shows the graphs, one card at a time
     function showGraphs() {
       navigateForward(); // Show on new page after result
+      document.getElementById('graphs-container').style.display = 'flex';
 
       fetch('/stats')
         .then(response => response.json())
@@ -585,7 +605,8 @@
 
      // New prediction
       function newPrediction(){
-        showStep(0);
+        resultWaterLevel = null; //release the water back to step based
+        document.getElementById('ocean').classList.remove('uncertain');
         currentStep = 0;
         showStep(currentStep);
 
@@ -599,6 +620,19 @@
         document.getElementById('other-explanation').style.display = 'none'; 
         document.getElementById('graphs-container').style.display = 'none';
       }
+      
+      document.addEventListener('keydown', (e) => {
+        if (e.key !== 'Enter') return;
+        if (e.target.tagName === 'BUTTON') return; //let a focused button click itself
+        e.preventDefault();
+
+        let active = steps[currentStep];
+        let submit = active.querySelector('.predictSurv');
+        let next = active.querySelector('.next-button');
+
+        if (submit) submit.click();
+        else if (next) next.click();
+      });
 
 
   </script>
