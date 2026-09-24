@@ -13,14 +13,25 @@
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<header>
-  <h1>Titanic Survival Prediction</h1>
-</header>
-
 <body>
+
+ <!--Page 0-->
+  <!--Title Page-->
+  <div class="form-step active">
+    <div>
+      <h1>Titanic Survival Prediction - AI Model</h1>
+      <h2 class="subtitle">By Dakota Villanueva & Lisa Kraatz</h2>
+      <p>text here</p>
+      <div class="buttons">
+        <button class="next-button" onclick="navigateForward()">Start</button>
+      </div>
+    </div>
+  </div>
+
+
   <!--Page 1-->
   <!--Name-->
-  <div class="form-step active">
+  <div class="form-step">
     <div>
       <div class="text-input">
         <h3 for="name">Enter your Name</h3>
@@ -29,6 +40,7 @@
         <p class="alert"></p><br>
       </div>
       <div class="buttons">
+        <button class="back-button" onclick="navigateBack()">Back</button>
         <button class="next-button" onclick="navigateForward()">Next</button>
       </div>
     </div>
@@ -78,8 +90,8 @@
             data-error='Please choose an option to continue.' required>
           <label for="sex-other">Other</label>
         </div>
-        <p class="alert"></p><br>
       </div>
+      <p class="alert"></p><br>
 
 
       <!--Title-->
@@ -95,8 +107,8 @@
           <option value="5">VIP</option>
           <option value="6">Professional</option>
         </select><br>
-        <p class="alert"></p><br>
       </div>
+      <p class="alert"></p><br>
 
       <div class="buttons">
         <button class="back-button" onclick="navigateBack()">Back</button>
@@ -131,8 +143,8 @@
             data-error='Please choose an option to continue.' required>
           <label for="class-1">Nothing but the best</label><br>
         </div>
-        <p class="alert"></p><br>
       </div>
+      <p class="alert"></p><br>
 
       <div class="buttons">
         <button class="back-button" onclick="navigateBack()">Back</button>
@@ -150,8 +162,9 @@
 
         <input type="number" id="sib-input" name="sib" min="0" max="10" size="3"
           data-error='If you have none, please enter "0"'><br>
-        <p class="alert"></p><br>
       </div>
+      <p class="alert"></p><br>
+      
       <!--Parents-->
       <h3>Are you travelling with your parents?</h3>
       <div class="radio-input horizontal">
@@ -166,8 +179,8 @@
             data-error='Please choose an option to continue.' required>
           <label for="pa-no">No</label><br>
         </div>
-        <p class="alert"></p><br>
       </div>
+      <p class="alert"></p><br>
 
       <div class="buttons">
         <button class="back-button" onclick="navigateBack()">Back</button>
@@ -271,7 +284,7 @@
     let chartInstances = {};
 
     // water level config
-    const RESULT_STEP = 6;
+    const RESULT_STEP = 7;
     const WATER = {
       start: 15,
       perStep: 8,  // pages 0-5 will land at 15, 23, 31, 39, 47, 55vh
@@ -378,7 +391,7 @@
 
             let radioContainer = activePage.querySelector('.radio-input')
             if (radioContainer) {
-              let radioAlert = radioContainer.querySelector('.alert')
+              let radioAlert = activePage.querySelector('.alert')
               if (radioAlert) {
                 radioAlert.innerText = radioGroup.dataset.error;
               }
@@ -422,11 +435,16 @@
         // Only show title selection for ages above 13
         titleField.style.display = currentAge <13 ? 'none' : 'block';
 
+        const NAME_STEP = 1;
+
         // once a prediction starts or exists, the result reflects the water level
         // hopefully this fixes the graphs and back button from refilling
-        if (stepIndex >= RESULT_STEP && resultWaterLevel !== null) {
+        if (stepIndex  >= RESULT_STEP && resultWaterLevel !== null) {
           setWater(resultWaterLevel);
-        } else {
+        } else if(stepIndex <= NAME_STEP){
+          setWater(WATER.start);
+        }
+        else {
           setWater(WATER.start + WATER.perStep * stepIndex);
         }
       }; 
@@ -607,7 +625,7 @@
       function newPrediction(){
         resultWaterLevel = null; //release the water back to step based
         document.getElementById('ocean').classList.remove('uncertain');
-        currentStep = 0;
+        currentStep = 1;
         showStep(currentStep);
 
         // Clear input fields
