@@ -75,7 +75,7 @@ h2{
 h3{
   font-family: "Prata", serif;
   font: Arial, sans-serif;
-  margin: 0 0 1rem 0;
+  margin: 0 0 1.5rem 0;
   font-size: 1.8rem;
 }
 
@@ -92,24 +92,76 @@ h3{
 
 .next-button, .back-button, .new-prediction, .show-graphs{
   margin: 1rem 0.5rem 1rem 0;
-  padding: 0.5rem 1.5rem 0.5rem 1.5rem;
+  padding: 0.6rem 1.5rem 0.6rem 1.5rem;
   border: 1px solid white;
-  border-radius: 0.5rem;
+  border-radius: 0.6rem;
   background-color: #73c1d7;
   font-size: 1.2rem;
 }
 
 .next-button:hover, .back-button:hover, .new-prediction:hover, .show-graphs:hover{
   background-color: #85d8ef;
+  cursor: pointer;
+}
+
+/* Colorful hover effect*/
+
+.buttons .predictSurv {
+  position: relative;
+  z-index: 0;
+  margin: 1rem 0.8rem 1rem 0;
+  padding: 0.6rem 1.5rem;
+  border: none;
+  outline: none;
+  border-radius: 0.6rem;
+  font-family: inherit;
+  font-size: 1.2rem;
+  background-color: white;
+  cursor: pointer;
 }
 
 
-.buttons .predictSurv {
-  margin: 1rem 0.8rem 1rem 0;
-  padding: 0.5rem 1.5rem 0.5rem 1.5rem;
-  border: 1px solid white;
-  border-radius: 0.5rem;
-  font-size: 1.2rem;
+
+.buttons .predictSurv:before {
+  content: '';
+  background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  background-size: 400%;
+  z-index: -1;
+  filter: blur(5px);
+  width: calc(100% + 4px);
+  height: calc(100% + 4px);
+  animation: glowing 20s linear infinite;
+  opacity: 0;
+  transition: opacity .3s ease-in-out;
+  border-radius: 0.6rem;
+}
+
+
+.buttons .predictSurv:after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  left: 0;
+  top: 0;
+  border-radius: 0.6rem;
+}
+
+/* 3. Reveal glow on hover */
+.buttons .predictSurv:hover:before {
+  opacity: 1;
+}
+
+
+@keyframes glowing {
+  0% { background-position: 0 0; }
+  50% { background-position: 400% 0; }
+  100% { background-position: 0 0; }
 }
 
 
