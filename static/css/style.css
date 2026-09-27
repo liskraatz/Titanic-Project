@@ -3,12 +3,13 @@
 *{
   margin: 0;
   padding: 0;
-};
+  box-sizing: border-box;
+}
 
 :root {
 --bg-color: white;
---text-color: #151515;;
---text-font: "Prata", "Didone", "Bodoni MT", "Georgia", serif;
+--text-color: #151515;
+--text-font: Prata, Didone, "Bodoni MT", Georgia, serif;
 }
 
 /* Header Styles */
@@ -55,7 +56,7 @@ header{
 /* Body Styles */
 
 body{
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: Helvetica, Arial, sans-serif;
   width: 80vw;
   margin-right: auto;
   margin-left: auto;
@@ -63,25 +64,49 @@ body{
 }
 
 h1{
-  font-family: "Prata", serif;
+  font-family: var(--text-font);
   margin-bottom: 0.5rem;
 }
 
 h2{
-  font-family: "Prata", serif;
+  font-family: var(--text-font);
   margin-bottom: 1rem;
+  font-weight: 600;
 }
 
 h3{
-  font-family: "Prata", serif;
-  font: Arial, sans-serif;
-  margin: 0 0 1.5rem 0;
+  font-family: var(--text-font);
+  margin: 1rem 0 1.5rem 0;
   font-size: 1.8rem;
 }
 
+
+/* Subtitle */
 .subtitle{
-  font-family: "Prata", serif;
-  color: #153970;
+  font-family: var(--text-font);
+  color: #73c1d7;
+  font-weight: 600;
+  margin-bottom: 2rem;
+}
+
+/* Title page explaination */
+.explain-text, #other-explanation{
+  font-size: 1.3rem;
+  margin-bottom: 2rem;
+}
+
+.explain-text a{
+  color: var(--text-color);
+  font-family: var(--text-font);
+  font-weight: bold;
+  font-size: 1.1rem;
+  text-decoration: none;
+}
+
+
+.explain-text a:hover{
+  color: #73c1d7;;
+  cursor: pointer;
 }
 
 /* Buttons */
@@ -90,19 +115,22 @@ h3{
   margin-top: auto;
 }
 
-.next-button, .back-button, .new-prediction, .show-graphs{
+
+.next-button, .back-button, .show-graphs, .new-prediction{
   margin: 1rem 0.5rem 1rem 0;
   padding: 0.6rem 1.5rem 0.6rem 1.5rem;
   border: 1px solid white;
   border-radius: 0.6rem;
-  background-color: #73c1d7;
+  background-color: #85d8ef;
   font-size: 1.2rem;
+  transition: transform 0.2s ease-in-out; /* Smoothes hover effect*/
 }
 
 .next-button:hover, .back-button:hover, .new-prediction:hover, .show-graphs:hover{
-  background-color: #85d8ef;
+  transform: scale(1.04);
   cursor: pointer;
 }
+
 
 /* Colorful hover effect*/
 
@@ -119,8 +147,6 @@ h3{
   background-color: white;
   cursor: pointer;
 }
-
-
 
 .buttons .predictSurv:before {
   content: '';
@@ -177,7 +203,7 @@ div.form-step.active{
   flex-direction: column;
   margin-right: auto;
   margin-left: auto;
-  min-height: clamp(400px, 45vh, 600px); /*Min height, ideal height, max*/
+  min-height: clamp(550px, 50vh, 650px); /*Min height, ideal height, max*/
   width: 100%;
   max-width: 600px;
   margin-top: 10rem;
@@ -212,10 +238,11 @@ div.form-step.active{
   font-size: 1.2rem;
 }
 
+
 .number-input input{
   padding: 0.8rem 1rem 0.8rem 1rem;
   margin-bottom: 0.5rem;
-  border: 1px solid;
+  border: 1px solid #151515;
   border-radius: 0.5rem;
   font-size: 1.2rem;
 }
@@ -232,7 +259,7 @@ input[type="radio"]{ /* Style radio buttons different from browser default */
 }
 
 input[type="radio"]:checked {
-  background: #153970;
+  background: #151515;
 }
 
 /* Vertical and horizontal radio button styling */
@@ -272,31 +299,38 @@ input[type="radio"]:checked {
   font-size: 1.2rem;
   font-weight: 600;
   margin-top: 0.5rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   color: #153970;
   width: 100%;         
-  min-height: 1.5rem;
-  flex-basis: 100%; /* New line in Flexbox*/
-  
+  height: 1.5rem;
  
 }
 
+/* Prediction message */
+h3#prediction-result{
+  line-height: 2;
+  font-size: 2rem;
+}
+
 /* Graphs section */
+
 #graphs-container{
   display: none;
-  flex-wrap: wrap;
-  gap: 1.5rem;
-  justify-content: center;
+  grid-template-columns: repeat(4, 1fr);
+  width: 1300px;
+  max-width: 90vw;
+  margin-left: calc((100% - min(1300px, 90vw)) / 2); /* Content goes outside container */
+  margin-right: calc((100% - min(1300px, 90vw)) / 2);
+  gap: 1rem;
   margin-top: 2rem;
+  margin-bottom: 4rem;
 }
 
 .chart-card{
   background-color: white;
   border: 1px solid #dcdcdc;
-  border-radius: 0.5rem;
+  min-width: 0;
   padding: 1rem;
-  width: 100%;
-  max-width: 600px;
   opacity: 0;
   transform: translateY(15px);
   transition: opacity 0.6s ease, transform 0.6s ease;
@@ -308,14 +342,19 @@ input[type="radio"]:checked {
 }
 
 .chart-card h4{
+  font-family: var(--text-font);
   text-align: center;
   font-weight: normal;
   margin-bottom: 1rem;
   font-size: 1.2rem;
 }
 
-#other-explanation{
-  font-size: 0.95rem;
-  margin-bottom: 1rem;
-  max-width: 500px;
+
+/* Mobile Styles */
+
+@media (max-width:758px){
+
+  .chart-card{
+    flex: 0 0 100%; /* 1 per row */
+  }
 }
