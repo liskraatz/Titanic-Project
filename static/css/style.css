@@ -314,6 +314,10 @@ h3#prediction-result{
 
 /* Graphs section */
 
+div.form-step.active:has(#graphs-container){ /* More space for content on graphs page */
+  margin-top: 7rem;
+}
+
 #graphs-container{
   display: none;
   grid-template-columns: repeat(4, 1fr);
