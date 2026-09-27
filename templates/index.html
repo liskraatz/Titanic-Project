@@ -13,22 +13,37 @@
       <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 
-<header>
-  <h1>Titanic Survival Prediction</h1>
-</header>
-
 <body>
+
+ <!--Page 0-->
+  <!--Title Page-->
+  <div class="form-step active">
+    <div>
+      <h1>Titanic Survival Prediction - AI Model</h1>
+      <h2 class="subtitle">By Dakota Villanueva & Lisa Kraatz</h2>
+      <p class="explain-text">Trained with the original data set from the passengers of the titanic, this model predicts whether you would've survived the catastrophy based on your information. It is modernized to bridge the gap between past and present without compromising historical accuracy.<br><br>
+        <a href="https://lisa-kraatz.framer.website/titanic-model" target="_blank">Learn more</a>
+      </p>
+      
+      <div class="buttons">
+        <button class="next-button" onclick="navigateForward()">Start</button>
+      </div>
+    </div>
+  </div>
+
+
   <!--Page 1-->
   <!--Name-->
-  <div class="form-step active">
+  <div class="form-step">
     <div>
       <div class="text-input">
         <h3 for="name">Enter your Name</h3>
         <input type="text" name="name" id="name-input" placeholder="Name"
-          data-error="Please enter your name to continue."><br>
-        <p class="alert"></p><br>
+          data-error="Please enter your name to continue.">
+        <p class="alert"></p>
       </div>
       <div class="buttons">
+        <button class="back-button" onclick="navigateBack()">Back</button>
         <button class="next-button" onclick="navigateForward()">Next</button>
       </div>
     </div>
@@ -41,8 +56,8 @@
       <div class="number-input">
         <h3>Age</h3>
         <input type="number" name="age" id="age-input" placeholder="Age" min="0" max="100" size="3"
-          data-error="Age must be between 0 and 100."><br>
-        <p class="alert"></p><br>
+          data-error="Age must be between 0 and 100.">
+        <p class="alert"></p>
       </div>
 
       <div class="buttons">
@@ -78,8 +93,9 @@
             data-error='Please choose an option to continue.' required>
           <label for="sex-other">Other</label>
         </div>
-        <p class="alert"></p><br>
+        <p class="alert"></p>
       </div>
+      
 
 
       <!--Title-->
@@ -94,9 +110,10 @@
           <option value="6">None</option> <!--Same value as professional to work with model-->
           <option value="5">VIP</option>
           <option value="6">Professional</option>
-        </select><br>
-        <p class="alert"></p><br>
+        </select>
+        <p class="alert"></p>
       </div>
+      
 
       <div class="buttons">
         <button class="back-button" onclick="navigateBack()">Back</button>
@@ -117,22 +134,23 @@
                 <div class="radio">
           <input type="radio" class="travel-comfort" name="class" value="3" id="class-3"
             data-error='Please choose an option to continue.' required>
-          <label for="class-3">I'd rough it to save money</label><br>
+          <label for="class-3">I'd rough it to save money</label>
         </div>
 
         <div class="radio">
           <input type="radio" class="travel-comfort" name="class" value="2" id="class-2"
             data-error='Please choose an option to continue.' required>
-          <label for="class-2">Comfortable but not extravagant</label><br>
+          <label for="class-2">Comfortable but not extravagant</label>
         </div>
 
         <div class="radio">
           <input type="radio" class="travel-comfort" name="class" value="1" id="class-1"
             data-error='Please choose an option to continue.' required>
-          <label for="class-1">Nothing but the best</label><br>
+          <label for="class-1">Nothing but the best</label>
         </div>
-        <p class="alert"></p><br>
+        <p class="alert"></p>
       </div>
+      
 
       <div class="buttons">
         <button class="back-button" onclick="navigateBack()">Back</button>
@@ -149,9 +167,11 @@
         <h3>How many siblings do you have?</h3>
 
         <input type="number" id="sib-input" name="sib" min="0" max="10" size="3"
-          data-error='If you have none, please enter "0"'><br>
-        <p class="alert"></p><br>
+          data-error='If you have none, please enter "0"'>
+          <p class="alert"></p>
       </div>
+      
+      
       <!--Parents-->
       <h3>Are you travelling with your parents?</h3>
       <div class="radio-input horizontal">
@@ -164,11 +184,12 @@
         <div class="radio">
           <input type="radio" class="pa-input" name="pa" value="0" id="pa-no"
             data-error='Please choose an option to continue.' required>
-          <label for="pa-no">No</label><br>
+          <label for="pa-no">No</label>
         </div>
-        <p class="alert"></p><br>
+        <p class="alert"></p>
       </div>
-
+       
+    
       <div class="buttons">
         <button class="back-button" onclick="navigateBack()">Back</button>
         <button class="next-button" onclick="navigateForward()">Next</button>
@@ -193,20 +214,22 @@
             data-error='Please choose an option to continue.'>
           <label for="no-sp">No</label>
         </div>
-        <p class="alert"></p><br>
+        <p class="alert"></p>
       </div>
+      
 
       <div class="number-input">
         <h3>How many children do you have?</h3>
         <input type="number" name="ch" id="ch-input" min="0" max="20" size="3"
-          data-error='If you have no children, please enter "0"'><br>
-        <p class="alert"></p><br><br>
+          data-error='If you have no children, please enter "0"'>
+        <p class="alert"></p>
       </div>
+      
 
       <!--Submit-->
       <div class="buttons">
         <button class="back-button" onclick="navigateBack()">Back</button>
-        <button class="predictSurv" onclick="sendPredictionData()">Predict Survival</button>
+        <button class="predictSurv" onclick="sendPredictionData()">Predict survival</button>
       </div>
     </div>
   </div>
@@ -217,7 +240,7 @@
       <h3 id="prediction-result"></h3>
       <div class="buttons">
         <button class="back-button" onclick="navigateBack()">Back</button>
-        <button class="next-button" onclick="showGraphs()">View Graphs</button>
+        <button class="next-button" onclick="showGraphs()">See why</button>
         <button class="new-prediction" onclick="newPrediction()">Start new prediction</button>
       </div>
     </div>
@@ -226,8 +249,15 @@
   <!--Page 8 - Graphs -->
   <div class="form-step">
     <div>
-      <h3 id="graphs"></h3>
-        <p id="other-explanation" style="display: none;"></p>
+        <div>
+          <h3>Survival Stats</h3>
+          <p id="other-explanation" style="display: none;"></p>
+          <p class="explain-text">These graphs show the actual percentages of the original dataset. See where you fit in each category and how high your chance of survival is based on that.<br><br>
+            <a href="https://lisa-kraatz.framer.website/titanic-model" target="_blank">Learn more</a>
+          </p>
+
+        </div>
+
       <div id="graphs-container">
         <div class="chart-card">
           <h4>By Class</h4>
@@ -271,7 +301,7 @@
     let chartInstances = {};
 
     // water level config
-    const RESULT_STEP = 6;
+    const RESULT_STEP = 7;
     const WATER = {
       start: 15,
       perStep: 8,  // pages 0-5 will land at 15, 23, 31, 39, 47, 55vh
@@ -286,7 +316,7 @@
     }
 
     // chart styling
-    Chart.defaults.font.family = "Prata, sans-serif";
+    Chart.defaults.font.family = "Helvetica", "Arial", "sans-serif";
     Chart.defaults.color = '#151515';
     Chart.defaults.plugins.legend.display = false;
 
@@ -422,11 +452,16 @@
         // Only show title selection for ages above 13
         titleField.style.display = currentAge <13 ? 'none' : 'block';
 
+        const NAME_STEP = 1;
+
         // once a prediction starts or exists, the result reflects the water level
         // hopefully this fixes the graphs and back button from refilling
-        if (stepIndex >= RESULT_STEP && resultWaterLevel !== null) {
+        if (stepIndex  >= RESULT_STEP && resultWaterLevel !== null) {
           setWater(resultWaterLevel);
-        } else {
+        } else if(stepIndex <= NAME_STEP){
+          setWater(WATER.start);
+        }
+        else {
           setWater(WATER.start + WATER.perStep * stepIndex);
         }
       }; 
@@ -515,7 +550,7 @@
      // Shows the graphs, one card at a time
     function showGraphs() {
       navigateForward(); // Show on new page after result
-      document.getElementById('graphs-container').style.display = 'flex';
+      document.getElementById('graphs-container').style.display = 'grid';
 
       fetch('/stats')
         .then(response => response.json())
@@ -607,7 +642,7 @@
       function newPrediction(){
         resultWaterLevel = null; //release the water back to step based
         document.getElementById('ocean').classList.remove('uncertain');
-        currentStep = 0;
+        currentStep = 1;
         showStep(currentStep);
 
         // Clear input fields

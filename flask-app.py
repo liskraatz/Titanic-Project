@@ -33,7 +33,7 @@ app = Flask(__name__) # tells flask to search in current script
 def home():
   return render_template('index.html') # Sends file to browser for display
 
-# sends the survival rate stats for the graphs
+# Sends the survival rate stats for the graphs
 @app.route('/stats', methods=['GET'])
 def get_stats():
   class_stats = (train.groupby('Pclass')['Survived'].mean() * 100).round(1).to_dict()
@@ -133,9 +133,9 @@ def predict_survival():
   outcome = int(prediction_array[0])
 
   if outcome == 1:
-     predictionMsg = 'Congratulations, ' + name + ' you survived.'
+     predictionMsg = 'Congratulations, ' + name + '.'+ '\nYou survived!'
   else:
-     predictionMsg = 'Sorry, ' + name + ' you died.'
+     predictionMsg = 'Sorry, ' + name + '.'+ '\nYou did not make it.'
 
   return jsonify({
     'isOther': False,
@@ -152,4 +152,4 @@ def predict_survival():
 
 # Start web engine and listen to internet traffic
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False) # Prevents users from injecting code
