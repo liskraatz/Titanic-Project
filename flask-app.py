@@ -66,13 +66,20 @@ def predict_survival():
   name = data.get('name')
   sex = int(data.get('sex'))
   age = int(data.get('age'))
+
+  NONE_TITLE = 7 # new value for "None" title, which is now its own value after retraining the model
+  
   title = int(data.get('title', 1)) # Add default to prevent crashing
-  # child titles: Master / Miss. Applied per-run below when sex == 2.
+  # child titles: Master / Miss. Applied per run below when sex == 2.
   if age < 13:
       if sex == 0:
         title = 4
       elif sex == 1:
         title = 2
+  elif title == NONE_TITLE:
+     # no historical data for "None" title, so default to Mr/Ms based on sex, the most common titles in the dataset. 
+     # this is a compromise to allow the model to run without crashing
+     title = 1 if sex == 0 else 2
   
   travelComfort = int(data.get('travel-comfort'))
   siblings = int(data.get('sib'))
@@ -90,9 +97,9 @@ def predict_survival():
   # sex = 2 means "other" was picked, this is just now taking into consideration that option
   # since the model cant predict the other, we will run it once as male and once as female and show both
   if sex == 2:
-    # child title depends on which run we're doing, so set it per-run
-    male_title = 4 if age < 13 else title
-    female_title = 2 if age < 13 else title
+    # child title depends on which run we're doing, so set it per run
+    male_title = 4 if age < 13 else (1 if title == NONE_TITLE else title) #added default to prevent crashing, (1) for Mr, the most common title in the dataset for male
+    female_title = 2 if age < 13 else (2 if title == NONE_TITLE else title) # and (2) for Ms, the most common title in the dataset for female
 
     male_features = [[travelComfort, 0, age, SibSp, ParCh, male_title]]
     female_features = [[travelComfort, 1, age, SibSp, ParCh, female_title]]
