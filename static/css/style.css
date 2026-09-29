@@ -29,9 +29,11 @@ header{
   left: 0;
   height: 15vh;
   width: 100%;
-  transition: height 0.8s ease-in-out;
+  transition: height 1.2s ease-in-out, background-color 1.8s ease-in-out;
   z-index: -1;
 }
+
+
 
 .wave{
   position: absolute;
@@ -41,6 +43,7 @@ header{
   height: 100px;
   fill: #73c1d7;
   animation: rollWave 4s linear infinite;
+  transition: fill 1.8s ease-in-out, height 1.2s ease-in-out, top 1.2s ease-in-out;
 }
 
 @keyframes rollWave {
@@ -51,6 +54,34 @@ header{
     transform: translateX(-50%);
   }
 }
+
+/* Dramatic Wave */
+
+/* Dramatic Wave - DIED */
+body.drowned #ocean{
+  background-color: #187d98;
+}
+
+body.drowned .wave{
+  fill: #187d98;
+}
+
+/* Dramatic Wave - SURVIVED */
+body.survived #ocean{
+  animation-duration: 8s;
+  background-color: #73d2d7;
+}
+
+body.survived .wave{
+  animation-duration: 8s;
+  fill: #73d2d7;
+}
+
+body.survived{
+  background-color: #fff8d6;
+}
+
+
 
 
 /* Body Styles */
@@ -331,7 +362,7 @@ div.form-step.active:has(#graphs-container){ /* More space for content on graphs
 }
 
 .chart-card{
-  background-color: white;
+  background-color: transparent;
   border: 1px solid #dcdcdc;
   min-width: 0;
   padding: 1rem;
@@ -355,10 +386,3 @@ div.form-step.active:has(#graphs-container){ /* More space for content on graphs
 
 
 /* Mobile Styles */
-
-@media (max-width:758px){
-
-  .chart-card{
-    flex: 0 0 100%; /* 1 per row */
-  }
-}
