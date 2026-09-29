@@ -234,6 +234,7 @@
     </div>
   </div>
 
+
   <!--Page 7 - RESULTS -->
   <div class="form-step">
     <div>
@@ -253,7 +254,7 @@
           <h3>Survival Stats</h3>
           <p id="other-explanation" style="display: none;"></p>
           <p class="explain-text">These graphs show the actual percentages of the original dataset. See where you fit in each category and how high your chance of survival is based on that.<br><br>
-            <a href="https://lisa-kraatz.framer.website/titanic-model" target="_blank">Learn more</a>
+            <a href="https://lisa-kraatz.framer.website/titanic-model" target="_blank">View full documentation</a>
           </p>
 
         </div>
@@ -300,13 +301,13 @@
     let isOtherResult = false;
     let chartInstances = {};
 
-    // water level config
+    // Water level config
     const RESULT_STEP = 7;
     const WATER = {
       start: 15,
       perStep: 8,  // pages 0-5 will land at 15, 23, 31, 39, 47, 55vh
       survived: 5,
-      drowned: 95,
+      drowned: 93,
       mixed: 55
     };
     let resultWaterLevel = null; // only until prediction is made
@@ -337,8 +338,14 @@
 
     function navigateBack() {
       if (currentStep > 0) {
+        if (currentStep === RESULT_STEP){
+          document.body.classList.remove('drowned');
+          document.body.classList.remove('survived');
+          resultWaterLevel = null;
+        }
         currentStep--;
         showStep(currentStep)
+
       };
     };
 
@@ -455,7 +462,6 @@
         const NAME_STEP = 1;
 
         // once a prediction starts or exists, the result reflects the water level
-        // hopefully this fixes the graphs and back button from refilling
         if (stepIndex  >= RESULT_STEP && resultWaterLevel !== null) {
           setWater(resultWaterLevel);
         } else if(stepIndex <= NAME_STEP){
@@ -465,6 +471,8 @@
           setWater(WATER.start + WATER.perStep * stepIndex);
         }
       }; 
+
+      
 
 
     // Get data from user input
@@ -497,6 +505,7 @@
         sp: sp,
         ch: ch,
       };
+
 
 
       // Sending data in background
@@ -533,8 +542,15 @@
             resultWaterLevel = data.outcome === 1 ? WATER.survived : WATER.drowned;
           }
 
-          // faster wave when the two runs disagree
+          // Faster wave when the two runs disagree
           ocean.classList.toggle('uncertain', resultWaterLevel === WATER.mixed);
+
+          // Dramatic water behaviour on result -> alters css classes
+          const isDrowned = (data.outcome === 0) || (data.isOther && data.maleOutcome === 0 && data.femaleOutcome === 0); // Returns boolean 
+          document.body.classList.toggle('drowned', isDrowned);
+          document.body.classList.toggle('survived', !isDrowned && !data.isOther);  // Did not drown and not split outcome
+
+    
 
           currentStep = RESULT_STEP;
           showStep(currentStep);
@@ -654,6 +670,7 @@
         document.querySelectorAll('.chart-card').forEach(card => {card.classList.remove('show')});
         document.getElementById('other-explanation').style.display = 'none'; 
         document.getElementById('graphs-container').style.display = 'none';
+        document.body.classList.remove('drowned', 'survived'); // reset added classes for dramatic effect
       }
       
       document.addEventListener('keydown', (e) => {
