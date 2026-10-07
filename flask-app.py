@@ -159,4 +159,4 @@ def predict_survival():
 
 # Start web engine and listen to internet traffic
 if __name__ == '__main__':
-    app.run(debug=True) # Prevents users from injecting code
+    app.run(debug=False) # Prevents users from injecting code
