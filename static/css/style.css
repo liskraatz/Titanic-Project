@@ -237,7 +237,7 @@ div.form-step.active{
   margin-left: auto;
   min-height: clamp(550px, 50vh, 650px); /*Min height, ideal height, max*/
   width: 100%;
-  max-width: 600px;
+  max-width: 700px;
   margin-top: 10rem;
 }
 
@@ -387,3 +387,71 @@ div.form-step.active:has(#graphs-container){ /* More space for content on graphs
 
 
 /* Mobile Styles */
+
+@media (max-width: 767px) {
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  h2 {
+    font-size: 1.2rem;
+  }
+
+  h3 {
+    font-size: 1.3rem;
+  }
+
+  p, .explain-text {
+    font-size: 1.2rem;
+  }
+
+  .explain-text a{
+    font-size: 1rem;
+  }
+
+  .alert{
+    font-size: 1rem;
+  }
+
+  .next-button, .back-button, .show-graphs, .new-prediction{
+  padding: 0.5rem 1.4rem 0.5rem 1.4rem;
+  font-size: 1.1rem;
+
+}
+
+
+  div.form-step.active{
+  padding: 1rem;
+  margin-right: auto;
+  margin-left: auto;
+  min-height: clamp(600px, 50vh, 800px); /*Min height, ideal height, max*/
+  width: 100%;
+  max-width: 650px;
+  margin-top: 8rem;
+  }
+
+  .radio-input.horizontal{
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  font-size: 1.2rem;
+  }
+
+  .radio-input.vertical {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 1rem;
+  font-size: 1.2rem;
+  
+  }
+
+  #graphs-container{
+  grid-template-columns:  1fr;
+  width: 90vw;
+  gap: 1rem;
+  margin-top: 1rem;
+  margin-bottom: 3rem;
+}
+
+}
