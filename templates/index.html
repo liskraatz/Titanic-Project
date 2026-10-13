@@ -296,6 +296,7 @@
     // Form Navigation 
     let currentStep = 0
     let steps = document.querySelectorAll('.form-step');
+    
 
     // keeps track of the last prediction for graph highlights
     let lastUserStats = null
@@ -451,11 +452,20 @@
     // Simulate pages in form
     function showStep(stepIndex) {
 
+
       let currentAge = parseInt(document.getElementById('age-input').value) || 0;
 
       steps.forEach((step, index) => {
         step.classList.toggle('active', index === stepIndex);
       });
+
+      // Select input boxes on pageload
+      const activeStep = document.querySelector('.form-step.active');
+      const inputFocus = activeStep ? activeStep.querySelector('input, select') : null;
+
+      if(inputFocus){
+        inputFocus.focus();
+      }
 
         // Only show title selection for ages above 13
         titleField.style.display = currentAge <13 ? 'none' : 'block';
